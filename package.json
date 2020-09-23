@@ -38,5 +38,9 @@
   "bugs": {
     "url": "https://github.com/edwardeasling/musicbase/issues"
   },
-  "homepage": "https://github.com/edwardeasling/musicbase#readme"
+  "homepage": "https://github.com/edwardeasling/musicbase#readme",
+  "engines": {
+    "node": "10.13.0",
+    "npm": "6.4.1"
+  }
 }
