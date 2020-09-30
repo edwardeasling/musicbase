@@ -4,18 +4,17 @@ import { Link } from "react-router-dom";
 const Greeting = ({ currentUser, logout }) => {
 
     const loggedInGreeting = () => (
-        <div>
-            <h3>Welcome user {currentUser.username}</h3>
-            <button onClick={logout}>Logout</button>
-        </div>
+        <section className="header-right">
+            <h3 className="header-right-greetingtext">Logged in as {currentUser.username}</h3>
+            <p className="header-right-greetingtext auth-button" onClick={logout}>Logout</p>
+        </section>
     )
 
     const notLoggedInGreeting = () => (
-        <div>
-            <Link to='/signup'>Signup</Link>
-            <br />
-            <Link to='/login'>Login</Link>
-        </div>
+        <section className="header-right">
+            <Link to='/signup' className="header-right-greetingtext auth-button">Signup</Link>
+            <Link to='/login' className="header-right-greetingtext auth-button">Login</Link>
+        </section>
     )
 
     return currentUser ? loggedInGreeting() : notLoggedInGreeting();

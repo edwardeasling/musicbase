@@ -1,0 +1,44 @@
+.header {
+    height: 125px;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+}
+
+.header-left, .header-right {
+    display: flex;
+    height: 100%;
+}
+
+.header-left {
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.header-left-logo {
+    height: calc(0.8 * 99px);
+    width: calc(0.8 * 186px);
+}
+
+.header-left-text, .header-right {
+    font-size: 22px;
+}
+
+.header-middle {
+    width: 15%;
+}
+
+.header-right {
+    display: flex;
+    align-items: flex-end;
+}
+
+.header-right-greetingtext {
+    font-weight: bold;
+    padding: 12px;
+}
+
+.auth-button:hover {
+    text-decoration: underline;
+}

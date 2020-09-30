@@ -1,0 +1,58 @@
+.session-form {
+    display: flex;
+    flex-direction: column;
+
+    width: 500px;
+
+    border: 1px solid gray;
+    border-radius: 10px;
+    
+    margin: 40px 0px;
+
+    align-items: center;
+}
+
+.session-form h2 {
+    background-color: rgb(206, 206, 206);
+    font-size: 28px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.session-form-inputcontainer {
+    display: flex;
+    flex-direction: column;
+    
+    width: 80%;
+
+    padding: 20px; 
+
+    font-size: 24px;
+}
+
+.session-form-inputcontainer input {
+    padding: 5px;
+}
+
+.session-form-submitbutton {
+    width: 80%;
+    background-color: rgb(0,161,198);
+    border: none;
+    border-radius: 10px;
+    font-size: 28px;
+    color: white;
+    padding: 10px;
+    margin: 15px 0;
+}
+
+.session-form-input {
+    font-size: 24px;
+}
+
+.session-form-submitbutton:hover {
+    text-decoration: underline;
+}

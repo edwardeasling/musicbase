@@ -17,34 +17,36 @@ const SessionForm = ({ errors, formType, processForm }) => {
     const submitText = formType === 'login' ? 'Login' : 'Create account';
     const errorsList = errors ? errors.map((error, idx) => <li key={idx}>{error}</li>) : "";
     const emailInput = formType === 'login' ? "" : (
-        <label>Email
-                <input type="text" value={email} onChange={e => setEmail(e.target.value)} />
-            <br />
-        </label>
+        <div className="session-form-inputcontainer">
+            <label>Email</label>
+            <input className="session-form-input" type="text" value={email} onChange={e => setEmail(e.target.value)} />
+        </div>
     )
     const descriptionInput = formType === 'login' ? "" : (
-        <label>Description
-            <input type="text" value={description} onChange={e => setDescription(e.target.value)} />
-            <br />
-        </label>
+        <div className="session-form-inputcontainer">
+            <label>Description</label>
+            <input className="session-form-input" type="text" value={description} onChange={e => setDescription(e.target.value)} />
+        </div>
     )
 
     return (
-        <form onSubmit={ handleSubmit }>
-            <h2>{ headerText }</h2>
-            <label>Username
-                    <input type="text" value={ username } onChange={ e => setUsername(e.target.value) } />
-                <br />
-            </label>
-            <label>Password
-                <input type="password" value={ password } onChange={ e => setPassword(e.target.value) } />
-                <br />
-            </label>
-            { emailInput }
-            { descriptionInput }
-            <input type="submit" value={ submitText } />
-            <ul> {errorsList} </ul>
-        </form>
+        <div className="session-form-container">
+            <form onSubmit={ handleSubmit } className="session-form">
+                <h2>{ headerText }</h2>
+                <div className="session-form-inputcontainer">
+                    <label>Username</label>
+                    <input className="session-form-input" type="text" value={ username } onChange={ e => setUsername(e.target.value) } />
+                </div>
+                <div className="session-form-inputcontainer">
+                    <label>Password</label>
+                    <input className="session-form-input" type="password" value={ password } onChange={ e => setPassword(e.target.value) } />
+                </div>
+                { emailInput }
+                { descriptionInput }
+                <input type="submit" value={ submitText } className="session-form-submitbutton"/>
+                <ul> {errorsList} </ul>
+            </form>
+        </div>
     )
 
 }

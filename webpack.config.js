@@ -15,7 +15,13 @@ module.exports = {
                 query: {
                     presets: ['@babel/env', '@babel/react']
                 }
-            }
+            },
+            {
+                test: /\.(png|svg|jpg|gif)$/,
+                use: [
+                    'file-loader',
+                ],
+            },
         ]
     },
     devtool: 'source-map',

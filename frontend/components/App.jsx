@@ -2,25 +2,29 @@ import React from "react";
 import GreetingContainer from './greeting/greeting_container';
 import LoginFormContainer from './auth/login_form_container';
 import SignupFormContainer from './auth/signup_form_container';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
 
 const App = () => (
-    <div>
+    <div className="page-container">
         <header className="header">
-            <h1>MusicBase App</h1>
+            <section className="header-left">
+                <img src='./assets/logo.png' className="header-left-logo"/>
+                <h4 className="header-left-text">Get new music directly from artists and labels</h4>
+            </section>
+            <div className="header-middle"/>
             <GreetingContainer />
         </header>
 
-        <main>
+        <main className="main">
             <Switch>
                 <AuthRoute exact path="/login" component={ LoginFormContainer } />
                 <AuthRoute exact path="/signup" component={ SignupFormContainer } />
             </Switch>
         </main>
 
-        <footer>
-            <h4>Footer placeholder</h4>
+        <footer className="footer">
+            <h4></h4>
         </footer>
     </div>
 );
