@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-    mode: 'development',
+    mode: 'none',
     entry: './frontend/music_base.jsx',
     output: {
         path: path.resolve(__dirname, 'app', 'assets', 'javascripts'),
