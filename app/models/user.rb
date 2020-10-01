@@ -8,6 +8,10 @@ class User < ApplicationRecord
 
     after_initialize :ensure_session_token
 
+    has_many :releases,
+        class_name: "Release",
+        foreign_key: "artist_id"
+
     def self.find_by_credentials(username, password)
         # return user object if correct credentials provided
         user = User.find_by(username: username)
