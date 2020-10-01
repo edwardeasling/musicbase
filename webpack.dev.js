@@ -1,34 +1,6 @@
-const path = require('path');
+const { merge } = require('webpack-merge');
+const common = require('./webpack.common.js');
 
-module.exports = {
+module.exports = merge(common, {
     mode: 'development',
-    entry: './frontend/music_base.jsx',
-    output: {
-        path: path.resolve(__dirname, 'app', 'assets', 'javascripts'),
-        filename: 'bundle.js'
-    },
-    module: {
-        rules: [
-            {
-                test: [/\.jsx?$/],
-                exclude: /node_modules/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['@babel/env', '@babel/react']
-                }
-            },
-            {
-                test: /\.(png|svg|jpg|gif)$/,
-                use: [
-                    'file-loader',
-                ],
-            },
-        ]
-    },
-    devtool: 'source-map',
-    resolve: {
-        extensions: ['.js', '.jsx', '*'],
-    }
-};
-
-
+});
