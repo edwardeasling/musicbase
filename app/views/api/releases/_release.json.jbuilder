@@ -1,0 +1,1 @@
+json.extract! release, :id, :title, :year, :release_type, :price, :label, :artist_id
