@@ -2,6 +2,7 @@ import React from "react";
 import GreetingContainer from './greeting/greeting_container';
 import LoginFormContainer from './auth/login_form_container';
 import SignupFormContainer from './auth/signup_form_container';
+import ReleasesIndexContainer from './releases/releases_index_container';
 import { Route, Switch, Link } from 'react-router-dom';
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
 
@@ -22,6 +23,7 @@ const App = () => {
                 <Switch>
                     <AuthRoute exact path="/login" component={ LoginFormContainer } />
                     <AuthRoute exact path="/signup" component={ SignupFormContainer } />
+                    <AuthRoute exact path="/" component={ ReleasesIndexContainer } />
                 </Switch>
             </main>
 

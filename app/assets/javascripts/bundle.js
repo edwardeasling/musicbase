@@ -86,6 +86,38 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./frontend/actions/release_actions.js":
+/*!*********************************************!*\
+  !*** ./frontend/actions/release_actions.js ***!
+  \*********************************************/
+/*! exports provided: RECEIVE_RELEASES, fetchRandomReleases */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_RELEASES", function() { return RECEIVE_RELEASES; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchRandomReleases", function() { return fetchRandomReleases; });
+/* harmony import */ var _util_release_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/release_api_util */ "./frontend/util/release_api_util.js");
+
+var RECEIVE_RELEASES = "RECEIVE_RELEASES";
+
+var receiveReleases = function receiveReleases(releases) {
+  return {
+    type: RECEIVE_RELEASES,
+    releases: releases
+  };
+};
+
+var fetchRandomReleases = function fetchRandomReleases(numberOfReleases) {
+  return function (dispatch) {
+    return Object(_util_release_api_util__WEBPACK_IMPORTED_MODULE_0__["getRandomReleases"])(numberOfReleases).then(function (releases) {
+      return dispatch(receiveReleases(releases));
+    });
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/actions/session_actions.js":
 /*!*********************************************!*\
   !*** ./frontend/actions/session_actions.js ***!
@@ -169,8 +201,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _greeting_greeting_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./greeting/greeting_container */ "./frontend/components/greeting/greeting_container.js");
 /* harmony import */ var _auth_login_form_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./auth/login_form_container */ "./frontend/components/auth/login_form_container.js");
 /* harmony import */ var _auth_signup_form_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./auth/signup_form_container */ "./frontend/components/auth/signup_form_container.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.jsx");
+/* harmony import */ var _releases_releases_index_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./releases/releases_index_container */ "./frontend/components/releases/releases_index_container.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.jsx");
+
 
 
 
@@ -194,14 +228,18 @@ var App = function App() {
     className: "header-middle"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_greeting_greeting_container__WEBPACK_IMPORTED_MODULE_1__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", {
     className: "main"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_5__["AuthRoute"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_6__["AuthRoute"], {
     exact: true,
     path: "/login",
     component: _auth_login_form_container__WEBPACK_IMPORTED_MODULE_2__["default"]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_5__["AuthRoute"], {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_6__["AuthRoute"], {
     exact: true,
     path: "/signup",
     component: _auth_signup_form_container__WEBPACK_IMPORTED_MODULE_3__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_6__["AuthRoute"], {
+    exact: true,
+    path: "/",
+    component: _releases_releases_index_container__WEBPACK_IMPORTED_MODULE_4__["default"]
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("footer", {
     className: "footer"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null)));
@@ -493,6 +531,123 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
+/***/ "./frontend/components/releases/release_item.jsx":
+/*!*******************************************************!*\
+  !*** ./frontend/components/releases/release_item.jsx ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var ReleaseItem = function ReleaseItem(_ref) {
+  var release = _ref.release;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    src: "https://f4.bcbits.com/img/a0043393937_2.jpg"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, release.username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, release.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "(genres)"));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (ReleaseItem);
+
+/***/ }),
+
+/***/ "./frontend/components/releases/releases_index.jsx":
+/*!*********************************************************!*\
+  !*** ./frontend/components/releases/releases_index.jsx ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _release_item_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./release_item.jsx */ "./frontend/components/releases/release_item.jsx");
+
+
+
+var ReleasesIndex = function ReleasesIndex(_ref) {
+  var releases = _ref.releases,
+      fetchRandomReleases = _ref.fetchRandomReleases;
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    // Update the document title using the browser API
+    fetchRandomReleases(4);
+  }, []);
+
+  var shuffle = function shuffle(array) {
+    var currentIndex = array.length,
+        temporaryValue,
+        randomIndex; // While there remain elements to shuffle...
+
+    while (0 !== currentIndex) {
+      // Create a random index to pick from the original array
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1; // Cache the value, and swap it with the current element
+
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+  };
+
+  var releaseIds = shuffle(Object.keys(releases));
+  var releaseItems = releaseIds.map(function (id, idx) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_release_item_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      key: idx,
+      release: releases[id]
+    });
+  });
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, releaseItems);
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (ReleasesIndex);
+
+/***/ }),
+
+/***/ "./frontend/components/releases/releases_index_container.js":
+/*!******************************************************************!*\
+  !*** ./frontend/components/releases/releases_index_container.js ***!
+  \******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _releases_index_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./releases_index.jsx */ "./frontend/components/releases/releases_index.jsx");
+/* harmony import */ var _actions_release_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../../actions/release_actions */ "./frontend/actions/release_actions.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+
+
+
+
+var mapStateToProps = function mapStateToProps(_ref) {
+  var entities = _ref.entities;
+  return {
+    releases: entities.releases
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    fetchRandomReleases: function fetchRandomReleases(numberOfReleases) {
+      return dispatch(Object(_actions_release_actions__WEBPACK_IMPORTED_MODULE_2__["fetchRandomReleases"])(numberOfReleases));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["connect"])(mapStateToProps, mapDispatchToProps)(_releases_index_jsx__WEBPACK_IMPORTED_MODULE_1__["default"]));
+
+/***/ }),
+
 /***/ "./frontend/components/root.jsx":
 /*!**************************************!*\
   !*** ./frontend/components/root.jsx ***!
@@ -538,7 +693,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store/store */ "./frontend/store/store.js");
 /* harmony import */ var _components_root__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/root */ "./frontend/components/root.jsx");
-/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _actions_release_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./actions/release_actions */ "./frontend/actions/release_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
@@ -585,9 +740,12 @@ document.addEventListener('DOMContentLoaded', function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _users_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./users_reducer */ "./frontend/reducers/users_reducer.js");
+/* harmony import */ var _releases_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./releases_reducer */ "./frontend/reducers/releases_reducer.js");
+
 
 
 var entitiesReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
+  releases: _releases_reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
   users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (entitiesReducer);
@@ -611,6 +769,33 @@ var errorsReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"]
   session: _session_errors_reducer__WEBPACK_IMPORTED_MODULE_1__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (errorsReducer);
+
+/***/ }),
+
+/***/ "./frontend/reducers/releases_reducer.js":
+/*!***********************************************!*\
+  !*** ./frontend/reducers/releases_reducer.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_release_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/release_actions */ "./frontend/actions/release_actions.js");
+
+/* harmony default export */ __webpack_exports__["default"] = (function () {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+
+  switch (action.type) {
+    case _actions_release_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_RELEASES"]:
+      return Object.assign({}, action.releases);
+
+    default:
+      return state;
+  }
+});
 
 /***/ }),
 
@@ -761,6 +946,52 @@ var configureStore = function configureStore() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (configureStore);
+
+/***/ }),
+
+/***/ "./frontend/util/release_api_util.js":
+/*!*******************************************!*\
+  !*** ./frontend/util/release_api_util.js ***!
+  \*******************************************/
+/*! exports provided: createRelease, getRandomReleases, getUserReleases */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createRelease", function() { return createRelease; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getRandomReleases", function() { return getRandomReleases; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUserReleases", function() { return getUserReleases; });
+var createRelease = function createRelease(release, artistId) {
+  return $.ajax({
+    method: 'POST',
+    headers: {
+      'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content
+    },
+    url: "/api/users/".concat(artistId, "/releases"),
+    data: release
+  });
+};
+var getRandomReleases = function getRandomReleases(numberOfReleases) {
+  return $.ajax({
+    method: 'GET',
+    headers: {
+      'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content
+    },
+    url: "/api/releases",
+    data: {
+      numberOfReleases: numberOfReleases
+    }
+  });
+};
+var getUserReleases = function getUserReleases(userId) {
+  return $.ajax({
+    method: 'GET',
+    headers: {
+      'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content
+    },
+    url: "/api/users/".concat(userId, "/releases")
+  });
+}; // rel = { release: { title: 'Old Times', year: 1982, label: 'Hillbilly Folk Records', price: 1000, artist_id: 1, release_type: 'album' }}
 
 /***/ }),
 

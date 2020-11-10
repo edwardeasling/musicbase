@@ -13,7 +13,7 @@ class Api::ReleasesController < ApplicationController
         if params[:user_id] 
             @releases = Release.where(artist_id: params[:user_id]).includes(:artist)
         else
-            @releases = Release.order_by_rand.limit(4).all.includes(:artist)
+            @releases = Release.order_by_rand.limit(params[:numberOfReleases]).all.includes(:artist)
         end
         render :index
     end
