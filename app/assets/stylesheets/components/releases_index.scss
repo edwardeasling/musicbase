@@ -1,0 +1,31 @@
+.releases-index {
+    display: flex;
+    flex-wrap: wrap;
+    width: 80%;
+    justify-content: center;
+    align-content: center;
+}
+
+.release-item {
+    margin: 20px;
+}
+
+.release-item-image {
+    height: 300px;
+    width: 300px;
+}
+
+.release-artist {
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 5px;
+}
+
+.release-title {
+    font-size: 18px;
+    margin: 7px 0;
+}
+
+.release-genre {
+    color: gray;
+}

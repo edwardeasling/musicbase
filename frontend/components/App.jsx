@@ -12,7 +12,7 @@ const App = () => {
         <div className="page-container">
             <header className="header">
                 <section className="header-left">
-                    <img src={ window.logo } className="header-left-logo" />
+                    <Link to="/"><img src={window.logo} className="header-left-logo" /></Link>
                     <h4 className="header-left-text">Get new music directly from artists and labels</h4>
                 </section>
                 <div className="header-middle"/>

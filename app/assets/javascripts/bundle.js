@@ -219,10 +219,12 @@ var App = function App() {
     className: "header"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
     className: "header-left"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["Link"], {
+    to: "/"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
     src: window.logo,
     className: "header-left-logo"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
     className: "header-left-text"
   }, "Get new music directly from artists and labels")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "header-middle"
@@ -546,9 +548,18 @@ __webpack_require__.r(__webpack_exports__);
 
 var ReleaseItem = function ReleaseItem(_ref) {
   var release = _ref.release;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    className: "release-item"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    className: "release-item-image",
     src: "https://f4.bcbits.com/img/a0043393937_2.jpg"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, release.username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, release.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "(genres)"));
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "release-artist"
+  }, release.username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "release-title"
+  }, release.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "release-genre"
+  }, "(genre)"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (ReleaseItem);
@@ -575,19 +586,18 @@ var ReleasesIndex = function ReleasesIndex(_ref) {
       fetchRandomReleases = _ref.fetchRandomReleases;
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     // Update the document title using the browser API
-    fetchRandomReleases(4);
+    fetchRandomReleases(8);
   }, []);
 
   var shuffle = function shuffle(array) {
+    // shuffles an array
     var currentIndex = array.length,
         temporaryValue,
-        randomIndex; // While there remain elements to shuffle...
+        randomIndex;
 
     while (0 !== currentIndex) {
-      // Create a random index to pick from the original array
       randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1; // Cache the value, and swap it with the current element
-
+      currentIndex -= 1;
       temporaryValue = array[currentIndex];
       array[currentIndex] = array[randomIndex];
       array[randomIndex] = temporaryValue;
@@ -603,7 +613,9 @@ var ReleasesIndex = function ReleasesIndex(_ref) {
       release: releases[id]
     });
   });
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, releaseItems);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+    className: "releases-index"
+  }, releaseItems);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (ReleasesIndex);
