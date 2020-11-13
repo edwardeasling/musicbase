@@ -90,13 +90,14 @@
 /*!*********************************************!*\
   !*** ./frontend/actions/release_actions.js ***!
   \*********************************************/
-/*! exports provided: RECEIVE_RELEASES, fetchRandomReleases */
+/*! exports provided: RECEIVE_RELEASES, fetchRandomReleases, fetchUserReleases */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_RELEASES", function() { return RECEIVE_RELEASES; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchRandomReleases", function() { return fetchRandomReleases; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUserReleases", function() { return fetchUserReleases; });
 /* harmony import */ var _util_release_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/release_api_util */ "./frontend/util/release_api_util.js");
 
 var RECEIVE_RELEASES = "RECEIVE_RELEASES";
@@ -111,6 +112,13 @@ var receiveReleases = function receiveReleases(releases) {
 var fetchRandomReleases = function fetchRandomReleases(numberOfReleases) {
   return function (dispatch) {
     return Object(_util_release_api_util__WEBPACK_IMPORTED_MODULE_0__["getRandomReleases"])(numberOfReleases).then(function (releases) {
+      return dispatch(receiveReleases(releases));
+    });
+  };
+};
+var fetchUserReleases = function fetchUserReleases(userId) {
+  return function (dispatch) {
+    return Object(_util_release_api_util__WEBPACK_IMPORTED_MODULE_0__["getUserReleases"])(userId).then(function (releases) {
       return dispatch(receiveReleases(releases));
     });
   };
@@ -202,8 +210,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _auth_login_form_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./auth/login_form_container */ "./frontend/components/auth/login_form_container.js");
 /* harmony import */ var _auth_signup_form_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./auth/signup_form_container */ "./frontend/components/auth/signup_form_container.js");
 /* harmony import */ var _releases_releases_index_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./releases/releases_index_container */ "./frontend/components/releases/releases_index_container.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.jsx");
+/* harmony import */ var _artist_artist_detail_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./artist/artist_detail_container */ "./frontend/components/artist/artist_detail_container.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.jsx");
+
 
 
 
@@ -219,7 +229,7 @@ var App = function App() {
     className: "header"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
     className: "header-left"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["Link"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Link"], {
     to: "/"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
     src: window.logo,
@@ -230,15 +240,18 @@ var App = function App() {
     className: "header-middle"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_greeting_greeting_container__WEBPACK_IMPORTED_MODULE_1__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", {
     className: "main"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_6__["AuthRoute"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_7__["AuthRoute"], {
     exact: true,
     path: "/login",
     component: _auth_login_form_container__WEBPACK_IMPORTED_MODULE_2__["default"]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_6__["AuthRoute"], {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_7__["AuthRoute"], {
     exact: true,
     path: "/signup",
     component: _auth_signup_form_container__WEBPACK_IMPORTED_MODULE_3__["default"]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_6__["AuthRoute"], {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Route"], {
+    path: "/artist/:artistId/",
+    component: _artist_artist_detail_container__WEBPACK_IMPORTED_MODULE_5__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Route"], {
     exact: true,
     path: "/",
     component: _releases_releases_index_container__WEBPACK_IMPORTED_MODULE_4__["default"]
@@ -248,6 +261,89 @@ var App = function App() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
+
+/***/ }),
+
+/***/ "./frontend/components/artist/artist_detail.jsx":
+/*!******************************************************!*\
+  !*** ./frontend/components/artist/artist_detail.jsx ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _releases_releases_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../releases/releases_index */ "./frontend/components/releases/releases_index.jsx");
+
+
+
+
+var ArtistDetail = function ArtistDetail(_ref) {
+  var releases = _ref.releases,
+      type = _ref.type,
+      fetchReleases = _ref.fetchReleases;
+  var artistId = parseInt(Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useParams"])().artistId);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "artist-detail"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_releases_releases_index__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    releases: releases,
+    type: type,
+    fetchReleases: fetchReleases,
+    artistId: artistId
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "artist-right"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    src: "https://townsquare.media/site/838/files/2015/12/kingkhanbbq.jpg?w=980&q=75"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "artist-right-username"
+  }, "Username"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "artist-right-description"
+  }, "Description")));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (ArtistDetail);
+
+/***/ }),
+
+/***/ "./frontend/components/artist/artist_detail_container.js":
+/*!***************************************************************!*\
+  !*** ./frontend/components/artist/artist_detail_container.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _artist_detail_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./artist_detail.jsx */ "./frontend/components/artist/artist_detail.jsx");
+/* harmony import */ var _actions_release_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../../actions/release_actions */ "./frontend/actions/release_actions.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+
+
+
+
+var mapStateToProps = function mapStateToProps(_ref) {
+  var entities = _ref.entities;
+  return {
+    releases: entities.releases,
+    type: 'artist'
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    fetchReleases: function fetchReleases(artistId) {
+      return dispatch(Object(_actions_release_actions__WEBPACK_IMPORTED_MODULE_2__["fetchUserReleases"])(artistId));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["connect"])(mapStateToProps, mapDispatchToProps)(_artist_detail_jsx__WEBPACK_IMPORTED_MODULE_1__["default"]));
 
 /***/ }),
 
@@ -544,22 +640,29 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
 
 
 var ReleaseItem = function ReleaseItem(_ref) {
-  var release = _ref.release;
+  var release = _ref.release,
+      type = _ref.type;
+  var artistLine = type == "random" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    to: "/artist/".concat(release.artist_id)
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "release-artist"
+  }, release.username)) : "";
+  var genreLine = type == "random" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "release-genre"
+  }, "(genre)") : "";
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "release-item"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
     className: "release-item-image",
     src: "https://f4.bcbits.com/img/a0043393937_2.jpg"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "release-artist"
-  }, release.username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+  }), artistLine, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     className: "release-title"
-  }, release.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "release-genre"
-  }, "(genre)"));
+  }, release.title), genreLine);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (ReleaseItem);
@@ -583,10 +686,18 @@ __webpack_require__.r(__webpack_exports__);
 
 var ReleasesIndex = function ReleasesIndex(_ref) {
   var releases = _ref.releases,
-      fetchRandomReleases = _ref.fetchRandomReleases;
+      type = _ref.type,
+      fetchReleases = _ref.fetchReleases,
+      artistId = _ref.artistId;
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    // Update the document title using the browser API
-    fetchRandomReleases(8);
+    // fetches releases from database
+    console.log('type: ', type);
+
+    if (type == "random") {
+      fetchReleases(8);
+    } else {
+      fetchReleases(artistId);
+    }
   }, []);
 
   var shuffle = function shuffle(array) {
@@ -606,11 +717,27 @@ var ReleasesIndex = function ReleasesIndex(_ref) {
     return array;
   };
 
-  var releaseIds = shuffle(Object.keys(releases));
+  var releaseIds;
+
+  if (type == "random") {
+    releaseIds = shuffle(Object.keys(releases)); // shuffles releases randomly
+  } else {
+    var releaseObjectValues = Object.values(releases);
+    releaseObjectValues.sort(function (a, b) {
+      return a.year < b.year ? 1 : -1;
+    }); // sorts releases in descending year order
+
+    releaseIds = releaseObjectValues.map(function (release) {
+      return release.id;
+    });
+    console.log();
+  }
+
   var releaseItems = releaseIds.map(function (id, idx) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_release_item_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
       key: idx,
-      release: releases[id]
+      release: releases[id],
+      type: type
     });
   });
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -644,14 +771,15 @@ __webpack_require__.r(__webpack_exports__);
 var mapStateToProps = function mapStateToProps(_ref) {
   var entities = _ref.entities;
   return {
-    releases: entities.releases
+    releases: entities.releases,
+    type: 'random'
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    fetchRandomReleases: function fetchRandomReleases(numberOfReleases) {
-      return dispatch(Object(_actions_release_actions__WEBPACK_IMPORTED_MODULE_2__["fetchRandomReleases"])(numberOfReleases));
+    fetchReleases: function fetchReleases(numberReleases) {
+      return dispatch(Object(_actions_release_actions__WEBPACK_IMPORTED_MODULE_2__["fetchRandomReleases"])(numberReleases));
     }
   };
 };

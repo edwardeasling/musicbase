@@ -1,0 +1,21 @@
+.artist-detail {
+    display: flex;
+}
+
+.artist-right {
+    margin: 30px;
+}
+
+.artist-right img {
+    max-width: 300px;
+}
+
+.artist-right-username {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.artist-right-description {
+    font-size: 18px;
+}
