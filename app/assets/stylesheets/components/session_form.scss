@@ -1,4 +1,4 @@
-.session-form {
+.form {
     display: flex;
     flex-direction: column;
 
@@ -12,7 +12,7 @@
     align-items: center;
 }
 
-.session-form h2 {
+.form h2 {
     background-color: rgb(206, 206, 206);
     font-size: 28px;
     text-align: center;
@@ -23,7 +23,7 @@
     border-top-right-radius: 10px;
 }
 
-.session-form-inputcontainer {
+.form-inputcontainer {
     display: flex;
     flex-direction: column;
     
@@ -34,11 +34,11 @@
     font-size: 24px;
 }
 
-.session-form-inputcontainer input {
+.form-inputcontainer input {
     padding: 5px;
 }
 
-.session-form-submitbutton {
+.form-submitbutton {
     width: 80%;
     background-color: rgb(0,161,198);
     border: none;
@@ -49,10 +49,10 @@
     margin: 15px 0;
 }
 
-.session-form-input {
+.form-input {
     font-size: 24px;
 }
 
-.session-form-submitbutton:hover {
+.form-submitbutton:hover {
     text-decoration: underline;
 }
