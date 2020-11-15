@@ -5,7 +5,6 @@ const ReleasesIndex = ({ releases, type, fetchReleases, artistId }) => {
 
     useEffect(() => {
         // fetches releases from database
-        console.log('type: ', type)
         if (type=="random") { 
             fetchReleases(8)
         } else {

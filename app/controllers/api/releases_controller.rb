@@ -18,11 +18,11 @@ class Api::ReleasesController < ApplicationController
         render :index
     end
 
-    def show
-    end
+    # def show
+    # end
 
-    def destroy
-    end
+    # def destroy
+    # end
 
     private
     def release_params

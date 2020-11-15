@@ -86,19 +86,53 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./frontend/actions/artist_actions.js":
+/*!********************************************!*\
+  !*** ./frontend/actions/artist_actions.js ***!
+  \********************************************/
+/*! exports provided: RECEIVE_ARTIST, fetchArtist */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_ARTIST", function() { return RECEIVE_ARTIST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchArtist", function() { return fetchArtist; });
+/* harmony import */ var _util_artist_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/artist_api_util */ "./frontend/util/artist_api_util.js");
+
+var RECEIVE_ARTIST = "RECEIVE_ARTIST";
+
+var receiveArtist = function receiveArtist(artist) {
+  return {
+    type: RECEIVE_ARTIST,
+    artist: artist
+  };
+};
+
+var fetchArtist = function fetchArtist(artistId) {
+  return function (dispatch) {
+    return Object(_util_artist_api_util__WEBPACK_IMPORTED_MODULE_0__["getArtist"])(artistId).then(function (artist) {
+      return dispatch(receiveArtist(artist));
+    });
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/actions/release_actions.js":
 /*!*********************************************!*\
   !*** ./frontend/actions/release_actions.js ***!
   \*********************************************/
-/*! exports provided: RECEIVE_RELEASES, fetchRandomReleases, fetchUserReleases */
+/*! exports provided: RECEIVE_RELEASES, fetchRandomReleases, fetchUserInfo */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_RELEASES", function() { return RECEIVE_RELEASES; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchRandomReleases", function() { return fetchRandomReleases; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUserReleases", function() { return fetchUserReleases; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUserInfo", function() { return fetchUserInfo; });
 /* harmony import */ var _util_release_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/release_api_util */ "./frontend/util/release_api_util.js");
+/* harmony import */ var _artist_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./artist_actions */ "./frontend/actions/artist_actions.js");
+
 
 var RECEIVE_RELEASES = "RECEIVE_RELEASES";
 
@@ -116,11 +150,11 @@ var fetchRandomReleases = function fetchRandomReleases(numberOfReleases) {
     });
   };
 };
-var fetchUserReleases = function fetchUserReleases(userId) {
+var fetchUserInfo = function fetchUserInfo(userId) {
   return function (dispatch) {
     return Object(_util_release_api_util__WEBPACK_IMPORTED_MODULE_0__["getUserReleases"])(userId).then(function (releases) {
       return dispatch(receiveReleases(releases));
-    });
+    }).then(dispatch(Object(_artist_actions__WEBPACK_IMPORTED_MODULE_1__["fetchArtist"])(userId)));
   };
 };
 
@@ -284,8 +318,12 @@ __webpack_require__.r(__webpack_exports__);
 var ArtistDetail = function ArtistDetail(_ref) {
   var releases = _ref.releases,
       type = _ref.type,
+      artists = _ref.artists,
       fetchReleases = _ref.fetchReleases;
   var artistId = parseInt(Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useParams"])().artistId);
+  var artist = artists[artistId];
+  var username = artist ? artist.username : "";
+  var description = artist ? artist.description : "";
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "artist-detail"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_releases_releases_index__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -299,9 +337,9 @@ var ArtistDetail = function ArtistDetail(_ref) {
     src: "https://townsquare.media/site/838/files/2015/12/kingkhanbbq.jpg?w=980&q=75"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     className: "artist-right-username"
-  }, "Username"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+  }, username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     className: "artist-right-description"
-  }, "Description")));
+  }, description)));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (ArtistDetail);
@@ -331,14 +369,15 @@ var mapStateToProps = function mapStateToProps(_ref) {
   var entities = _ref.entities;
   return {
     releases: entities.releases,
-    type: 'artist'
+    type: 'artist',
+    artists: entities.artists
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     fetchReleases: function fetchReleases(artistId) {
-      return dispatch(Object(_actions_release_actions__WEBPACK_IMPORTED_MODULE_2__["fetchUserReleases"])(artistId));
+      return dispatch(Object(_actions_release_actions__WEBPACK_IMPORTED_MODULE_2__["fetchUserInfo"])(artistId));
     }
   };
 };
@@ -691,8 +730,6 @@ var ReleasesIndex = function ReleasesIndex(_ref) {
       artistId = _ref.artistId;
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     // fetches releases from database
-    console.log('type: ', type);
-
     if (type == "random") {
       fetchReleases(8);
     } else {
@@ -833,7 +870,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store/store */ "./frontend/store/store.js");
 /* harmony import */ var _components_root__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/root */ "./frontend/components/root.jsx");
-/* harmony import */ var _actions_release_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./actions/release_actions */ "./frontend/actions/release_actions.js");
+/* harmony import */ var _actions_artist_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./actions/artist_actions */ "./frontend/actions/artist_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
@@ -861,11 +898,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
   window.getState = store.getState;
   window.dispatch = store.dispatch;
+  window.fetchArtist = _actions_artist_actions__WEBPACK_IMPORTED_MODULE_4__["fetchArtist"];
   var root = document.getElementById('root');
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_3__["default"], {
     store: store
   }), root);
 }); // https://samuelmullen.com/articles/csrf-protection-and-ruby-on-rails/
+
+/***/ }),
+
+/***/ "./frontend/reducers/artists_reducer.js":
+/*!**********************************************!*\
+  !*** ./frontend/reducers/artists_reducer.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_artist_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/artist_actions */ "./frontend/actions/artist_actions.js");
+
+/* harmony default export */ __webpack_exports__["default"] = (function () {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+
+  switch (action.type) {
+    case _actions_artist_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_ARTIST"]:
+      return Object.assign({}, action.artist);
+
+    default:
+      return state;
+  }
+});
 
 /***/ }),
 
@@ -881,12 +946,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _users_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./users_reducer */ "./frontend/reducers/users_reducer.js");
 /* harmony import */ var _releases_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./releases_reducer */ "./frontend/reducers/releases_reducer.js");
+/* harmony import */ var _artists_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./artists_reducer */ "./frontend/reducers/artists_reducer.js");
+
 
 
 
 var entitiesReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   releases: _releases_reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
-  users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__["default"]
+  users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
+  artists: _artists_reducer__WEBPACK_IMPORTED_MODULE_3__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (entitiesReducer);
 
@@ -1086,6 +1154,28 @@ var configureStore = function configureStore() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (configureStore);
+
+/***/ }),
+
+/***/ "./frontend/util/artist_api_util.js":
+/*!******************************************!*\
+  !*** ./frontend/util/artist_api_util.js ***!
+  \******************************************/
+/*! exports provided: getArtist */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getArtist", function() { return getArtist; });
+var getArtist = function getArtist(userId) {
+  return $.ajax({
+    method: 'GET',
+    headers: {
+      'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content
+    },
+    url: "/api/users/".concat(userId)
+  });
+};
 
 /***/ }),
 
