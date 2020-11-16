@@ -122,24 +122,43 @@ var fetchArtist = function fetchArtist(artistId) {
 /*!*********************************************!*\
   !*** ./frontend/actions/release_actions.js ***!
   \*********************************************/
-/*! exports provided: RECEIVE_RELEASES, fetchRandomReleases, fetchUserInfo */
+/*! exports provided: RECEIVE_RELEASES, RECEIVE_RELEASE, RECEIVE_ERRORS, fetchRandomReleases, fetchUserInfo, createNewRelease */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_RELEASES", function() { return RECEIVE_RELEASES; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_RELEASE", function() { return RECEIVE_RELEASE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_ERRORS", function() { return RECEIVE_ERRORS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchRandomReleases", function() { return fetchRandomReleases; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUserInfo", function() { return fetchUserInfo; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNewRelease", function() { return createNewRelease; });
 /* harmony import */ var _util_release_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/release_api_util */ "./frontend/util/release_api_util.js");
 /* harmony import */ var _artist_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./artist_actions */ "./frontend/actions/artist_actions.js");
 
 
 var RECEIVE_RELEASES = "RECEIVE_RELEASES";
+var RECEIVE_RELEASE = "RECEIVE_RELEASE";
+var RECEIVE_ERRORS = "RECEIVE_ERRORS";
 
 var receiveReleases = function receiveReleases(releases) {
   return {
     type: RECEIVE_RELEASES,
     releases: releases
+  };
+};
+
+var receiveRelease = function receiveRelease(release) {
+  return {
+    type: RECEIVE_RELEASE,
+    release: release
+  };
+};
+
+var receiveErrors = function receiveErrors(errors) {
+  return {
+    type: RECEIVE_ERRORS,
+    errors: errors
   };
 };
 
@@ -155,6 +174,15 @@ var fetchUserInfo = function fetchUserInfo(userId) {
     return Object(_util_release_api_util__WEBPACK_IMPORTED_MODULE_0__["getUserReleases"])(userId).then(function (releases) {
       return dispatch(receiveReleases(releases));
     }).then(dispatch(Object(_artist_actions__WEBPACK_IMPORTED_MODULE_1__["fetchArtist"])(userId)));
+  };
+};
+var createNewRelease = function createNewRelease(release, artistId) {
+  return function (dispatch) {
+    return Object(_util_release_api_util__WEBPACK_IMPORTED_MODULE_0__["createRelease"])(release, artistId).then(function (release) {
+      return dispatch(receiveRelease(release));
+    }, function (err) {
+      return dispatch(receiveErrors(err.responseJSON));
+    });
   };
 };
 
@@ -691,8 +719,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _util_release_api_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/release_api_util */ "./frontend/util/release_api_util.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -708,10 +735,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
 var SessionForm = function SessionForm(_ref) {
   var errors = _ref.errors,
-      currentUserId = _ref.currentUserId;
+      currentUserId = _ref.currentUserId,
+      createNewRelease = _ref.createNewRelease;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(""),
       _useState2 = _slicedToArray(_useState, 2),
@@ -738,7 +765,7 @@ var SessionForm = function SessionForm(_ref) {
       price = _useState10[0],
       setPrice = _useState10[1];
 
-  var history = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["useHistory"])();
+  var history = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useHistory"])();
 
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
@@ -752,10 +779,16 @@ var SessionForm = function SessionForm(_ref) {
         artist_id: currentUserId
       }
     };
-    Object(_util_release_api_util__WEBPACK_IMPORTED_MODULE_1__["createRelease"])(release, currentUserId).then(history.push("/artist/".concat(currentUserId)));
-  }; // const errorsList = errors ? errors.map((error, idx) => <li key={idx}>{error}</li>) : "";
+    createNewRelease(release, currentUserId).then(function () {
+      return history.push("/artist/".concat(currentUserId));
+    });
+  };
 
-
+  var errorsList = errors ? errors.map(function (error, idx) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      key: idx
+    }, error);
+  }) : "";
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "form-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
@@ -794,7 +827,8 @@ var SessionForm = function SessionForm(_ref) {
     value: releaseType,
     onChange: function onChange(e) {
       return setReleaseType(e.target.value);
-    }
+    },
+    className: "form-input"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
     value: "album"
   }, "Album"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
@@ -818,7 +852,7 @@ var SessionForm = function SessionForm(_ref) {
     type: "submit",
     value: "Add Release",
     className: "form-submitbutton"
-  })));
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, " ", errorsList, " ")));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (SessionForm);
@@ -836,17 +870,27 @@ var SessionForm = function SessionForm(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _release_form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./release_form */ "./frontend/components/releases/release_form.jsx");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_release_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/release_actions */ "./frontend/actions/release_actions.js");
+
 
 
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    currentUserId: state.session.id // errors: state.errors.release.errors,
-
+    currentUserId: state.session.id,
+    errors: state.errors.release.errors
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, null)(_release_form__WEBPACK_IMPORTED_MODULE_0__["default"]));
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    createNewRelease: function createNewRelease(release, artistId) {
+      return dispatch(Object(_actions_release_actions__WEBPACK_IMPORTED_MODULE_2__["createNewRelease"])(release, artistId));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(_release_form__WEBPACK_IMPORTED_MODULE_0__["default"]));
 
 /***/ }),
 
@@ -1153,12 +1197,47 @@ var entitiesReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _session_errors_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./session_errors_reducer */ "./frontend/reducers/session_errors_reducer.js");
+/* harmony import */ var _release_errors_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./release_errors_reducer */ "./frontend/reducers/release_errors_reducer.js");
+
 
 
 var errorsReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
-  session: _session_errors_reducer__WEBPACK_IMPORTED_MODULE_1__["default"]
+  session: _session_errors_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
+  release: _release_errors_reducer__WEBPACK_IMPORTED_MODULE_2__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (errorsReducer);
+
+/***/ }),
+
+/***/ "./frontend/reducers/release_errors_reducer.js":
+/*!*****************************************************!*\
+  !*** ./frontend/reducers/release_errors_reducer.js ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_release_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/release_actions */ "./frontend/actions/release_actions.js");
+
+/* harmony default export */ __webpack_exports__["default"] = (function () {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+
+  switch (action.type) {
+    case _actions_release_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_RELEASE"]:
+      return [];
+
+    case _actions_release_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_ERRORS"]:
+      return Object.assign([], {
+        errors: action.errors
+      });
+
+    default:
+      return state;
+  }
+});
 
 /***/ }),
 
@@ -1181,6 +1260,9 @@ __webpack_require__.r(__webpack_exports__);
   switch (action.type) {
     case _actions_release_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_RELEASES"]:
       return Object.assign({}, action.releases);
+
+    case _actions_release_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_RELEASE"]:
+      return Object.assign({});
 
     default:
       return state;

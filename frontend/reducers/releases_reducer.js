@@ -1,4 +1,4 @@
-import { RECEIVE_RELEASES } from '../actions/release_actions'
+import { RECEIVE_RELEASES, RECEIVE_RELEASE } from '../actions/release_actions'
 
 export default (state = {}, action) => {
     Object.freeze(state)
@@ -6,6 +6,8 @@ export default (state = {}, action) => {
     switch (action.type) {
         case RECEIVE_RELEASES:
             return Object.assign({}, action.releases);
+        case RECEIVE_RELEASE:
+            return Object.assign({});
         default:
             return state;
     }
