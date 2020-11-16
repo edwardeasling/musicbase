@@ -5,6 +5,7 @@ const SessionForm = ({ errors, currentUserId, createNewRelease }) => {
 
     const [title, setTitle] = useState("");
     const [label, setLabel] = useState("");
+    const [genre, setGenre] = useState("");
     const [year, setYear] = useState("");
     const [releaseType, setReleaseType] = useState("album");
     const [price, setPrice] = useState("");
@@ -13,7 +14,7 @@ const SessionForm = ({ errors, currentUserId, createNewRelease }) => {
 
     let handleSubmit = e => {
         e.preventDefault();
-        const release = { release: { title: title, label: label, year: year, release_type: releaseType, price: price, artist_id: currentUserId}};
+        const release = { release: { title: title, label: label, genre: genre, year: year, release_type: releaseType, price: price, artist_id: currentUserId}};
         createNewRelease(release, currentUserId).then(() => history.push(`/artist/${currentUserId}`));
     }
 
@@ -30,6 +31,10 @@ const SessionForm = ({ errors, currentUserId, createNewRelease }) => {
                 <div className="form-inputcontainer">
                     <label>Label</label>
                     <input className="form-input" type="text" value={ label } onChange={ e => setLabel(e.target.value) } />
+                </div>
+                <div className="form-inputcontainer">
+                    <label>Genre</label>
+                    <input className="form-input" type="text" value={ genre } onChange={ e => setGenre(e.target.value) } />
                 </div>
                 <div className="form-inputcontainer">
                     <label>Year</label>

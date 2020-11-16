@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const ReleaseItem = ({ release, type }) => {
 
     const artistLine = type == "random" ? <Link to={`/artist/${release.artist_id}`}><p className="release-artist">{release.username}</p></Link> : "";
-    const genreLine = type == "random" ? <p className="release-genre">(genre)</p> : "";
+    const genreLine = type == "random" ? <p className="release-genre">{release.genre}</p> : "";
 
     return (
         <li className="release-item">

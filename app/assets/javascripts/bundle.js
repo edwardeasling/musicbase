@@ -752,18 +752,23 @@ var SessionForm = function SessionForm(_ref) {
 
   var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(""),
       _useState6 = _slicedToArray(_useState5, 2),
-      year = _useState6[0],
-      setYear = _useState6[1];
+      genre = _useState6[0],
+      setGenre = _useState6[1];
 
-  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])("album"),
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(""),
       _useState8 = _slicedToArray(_useState7, 2),
-      releaseType = _useState8[0],
-      setReleaseType = _useState8[1];
+      year = _useState8[0],
+      setYear = _useState8[1];
 
-  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(""),
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])("album"),
       _useState10 = _slicedToArray(_useState9, 2),
-      price = _useState10[0],
-      setPrice = _useState10[1];
+      releaseType = _useState10[0],
+      setReleaseType = _useState10[1];
+
+  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(""),
+      _useState12 = _slicedToArray(_useState11, 2),
+      price = _useState12[0],
+      setPrice = _useState12[1];
 
   var history = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useHistory"])();
 
@@ -773,6 +778,7 @@ var SessionForm = function SessionForm(_ref) {
       release: {
         title: title,
         label: label,
+        genre: genre,
         year: year,
         release_type: releaseType,
         price: price,
@@ -811,6 +817,15 @@ var SessionForm = function SessionForm(_ref) {
     value: label,
     onChange: function onChange(e) {
       return setLabel(e.target.value);
+    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-inputcontainer"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Genre"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    className: "form-input",
+    type: "text",
+    value: genre,
+    onChange: function onChange(e) {
+      return setGenre(e.target.value);
     }
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "form-inputcontainer"
@@ -919,7 +934,7 @@ var ReleaseItem = function ReleaseItem(_ref) {
   }, release.username)) : "";
   var genreLine = type == "random" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     className: "release-genre"
-  }, "(genre)") : "";
+  }, release.genre) : "";
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "release-item"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
