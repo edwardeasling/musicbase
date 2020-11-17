@@ -122,14 +122,14 @@ var fetchArtist = function fetchArtist(artistId) {
 /*!*********************************************!*\
   !*** ./frontend/actions/release_actions.js ***!
   \*********************************************/
-/*! exports provided: RECEIVE_RELEASES, RECEIVE_RELEASE, RECEIVE_ERRORS, fetchRandomReleases, fetchUserInfo, createNewRelease */
+/*! exports provided: RECEIVE_RELEASES, RECEIVE_RELEASE, RECEIVE_RELEASE_ERRORS, fetchRandomReleases, fetchUserInfo, createNewRelease */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_RELEASES", function() { return RECEIVE_RELEASES; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_RELEASE", function() { return RECEIVE_RELEASE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_ERRORS", function() { return RECEIVE_ERRORS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_RELEASE_ERRORS", function() { return RECEIVE_RELEASE_ERRORS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchRandomReleases", function() { return fetchRandomReleases; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUserInfo", function() { return fetchUserInfo; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNewRelease", function() { return createNewRelease; });
@@ -139,7 +139,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var RECEIVE_RELEASES = "RECEIVE_RELEASES";
 var RECEIVE_RELEASE = "RECEIVE_RELEASE";
-var RECEIVE_ERRORS = "RECEIVE_ERRORS";
+var RECEIVE_RELEASE_ERRORS = "RECEIVE_RELEASE_ERRORS";
 
 var receiveReleases = function receiveReleases(releases) {
   return {
@@ -155,9 +155,9 @@ var receiveRelease = function receiveRelease(release) {
   };
 };
 
-var receiveErrors = function receiveErrors(errors) {
+var receiveReleaseErrors = function receiveReleaseErrors(errors) {
   return {
-    type: RECEIVE_ERRORS,
+    type: RECEIVE_RELEASE_ERRORS,
     errors: errors
   };
 };
@@ -181,7 +181,7 @@ var createNewRelease = function createNewRelease(release, artistId) {
     return Object(_util_release_api_util__WEBPACK_IMPORTED_MODULE_0__["createRelease"])(release, artistId).then(function (release) {
       return dispatch(receiveRelease(release));
     }, function (err) {
-      return dispatch(receiveErrors(err.responseJSON));
+      return dispatch(receiveReleaseErrors(err.responseJSON));
     });
   };
 };
@@ -638,14 +638,25 @@ __webpack_require__.r(__webpack_exports__);
 var Greeting = function Greeting(_ref) {
   var currentUser = _ref.currentUser,
       logout = _ref.logout;
+  var userPagePath;
+
+  if (currentUser) {
+    userPagePath = "/artist/".concat(currentUser.id);
+  }
 
   var loggedInGreeting = function loggedInGreeting() {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
       className: "header-right"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
       className: "header-right-greetingtext"
-    }, "Logged in as ", currentUser.username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-      className: "header-right-greetingtext auth-button",
+    }, "Logged in as ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      to: userPagePath,
+      className: "header-button"
+    }, currentUser.username)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      to: "/new_release",
+      className: "header-right-greetingtext"
+    }, "Create new release"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      className: "header-right-greetingtext header-button",
       onClick: logout
     }, "Logout"));
   };
@@ -655,10 +666,10 @@ var Greeting = function Greeting(_ref) {
       className: "header-right"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
       to: "/signup",
-      className: "header-right-greetingtext auth-button"
+      className: "header-right-greetingtext header-button"
     }, "Signup"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
       to: "/login",
-      className: "header-right-greetingtext auth-button"
+      className: "header-right-greetingtext header-button"
     }, "Login"));
   };
 
@@ -1244,7 +1255,7 @@ __webpack_require__.r(__webpack_exports__);
     case _actions_release_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_RELEASE"]:
       return [];
 
-    case _actions_release_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_ERRORS"]:
+    case _actions_release_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_RELEASE_ERRORS"]:
       return Object.assign([], {
         errors: action.errors
       });
@@ -1365,9 +1376,9 @@ var _nullState = {
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
-      return Object.assign({}, {
-        id: action.currentUser.id
-      });
+      return {
+        id: Object.keys(action.currentUser)[0]
+      };
 
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["LOGOUT_CURRENT_USER"]:
       return Object.assign({}, _nullState);
@@ -1389,8 +1400,6 @@ var _nullState = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/session_actions */ "./frontend/actions/session_actions.js");
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 /* harmony default export */ __webpack_exports__["default"] = (function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -1399,7 +1408,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
-      return Object.assign({}, state, _defineProperty({}, action.currentUser.id, action.currentUser));
+      return Object.assign({}, state, action.currentUser);
 
     default:
       return state;

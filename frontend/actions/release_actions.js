@@ -3,7 +3,7 @@ import { fetchArtist} from './artist_actions';
 
 export const RECEIVE_RELEASES = "RECEIVE_RELEASES";
 export const RECEIVE_RELEASE = "RECEIVE_RELEASE";
-export const RECEIVE_ERRORS = "RECEIVE_ERRORS";
+export const RECEIVE_RELEASE_ERRORS = "RECEIVE_RELEASE_ERRORS";
 
 const receiveReleases = releases => ({
     type: RECEIVE_RELEASES,
@@ -15,8 +15,8 @@ const receiveRelease = release => ({
     release
 })
 
-const receiveErrors = errors => ({
-    type: RECEIVE_ERRORS,
+const receiveReleaseErrors = errors => ({
+    type: RECEIVE_RELEASE_ERRORS,
     errors
 });
 
@@ -30,5 +30,5 @@ export const fetchUserInfo = userId => dispatch => getUserReleases(userId)
 export const createNewRelease = (release, artistId) => dispatch => createRelease(release, artistId)
     .then(
         release => dispatch(receiveRelease(release)),
-        err => (dispatch(receiveErrors(err.responseJSON))) 
+        err => (dispatch(receiveReleaseErrors(err.responseJSON))) 
     );

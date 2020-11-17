@@ -9,7 +9,7 @@ import { Route, Switch, Link } from 'react-router-dom';
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
 
 const App = () => {
-    
+
     return( 
         <div className="page-container">
             <header className="header">

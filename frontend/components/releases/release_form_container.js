@@ -11,6 +11,4 @@ const mapDispatchToProps = (dispatch) => ({
     createNewRelease: (release, artistId) => dispatch(createNewRelease(release, artistId))
 });
 
-
-
 export default connect(mapStateToProps, mapDispatchToProps)(Releaseform);
