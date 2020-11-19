@@ -9,16 +9,32 @@ const SessionForm = ({ errors, currentUserId, createNewRelease }) => {
     const [year, setYear] = useState("");
     const [releaseType, setReleaseType] = useState("album");
     const [price, setPrice] = useState("");
+    const [photoFile, setPhotoFile] = useState(null);
 
     const history = useHistory();
 
-    let handleSubmit = e => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        const release = { release: { title: title, label: label, genre: genre, year: year, release_type: releaseType, price: price, artist_id: currentUserId}};
-        createNewRelease(release, currentUserId).then(() => history.push(`/artist/${currentUserId}`));
+
+        const newRelease = new FormData();
+        newRelease.append('release[title]', title)
+        newRelease.append('release[label]', label)
+        newRelease.append('release[genre]', genre)
+        newRelease.append('release[year]', year)
+        newRelease.append('release[release_type]', releaseType)
+        newRelease.append('release[price]', price)
+        newRelease.append('release[artist_id]', currentUserId)
+        newRelease.append('release[photo]', photoFile)
+
+        createNewRelease(newRelease, currentUserId).then(() => history.push(`/artist/${currentUserId}`));
     }
 
-    const errorsList = errors ? errors.map((error, idx) => <li key={idx}>{error}</li>) : "";
+    const handleFile = (e) => {
+        e.preventDefault();
+        setPhotoFile(e.currentTarget.files[0]);
+    }
+
+    const errorsList = errors ? "Upload failed (form may be missing data)" : "";
 
     return (
         <div className="form-container">
@@ -54,8 +70,12 @@ const SessionForm = ({ errors, currentUserId, createNewRelease }) => {
                     <label>Price</label>
                     <input className="form-input" type="text" value={ price } onChange={ e => setPrice(e.target.value) } />
                 </div>
+                <div className="form-inputcontainer">
+                    <label>Release Art</label>
+                    <input className="form-input" type="file" onChange={ handleFile } />
+                </div>
                 <input type="submit" value="Add Release" className="form-submitbutton"/>
-                <ul> {errorsList} </ul>
+                <p className="form-errors"> {errorsList} </p>
             </form>
         </div>
     )

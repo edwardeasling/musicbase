@@ -5,7 +5,9 @@ export const createUser = (user) => (
             'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content
         },
         url: `/api/users/`,
-        data: user
+        data: user,
+        processData: false,
+        contentType: false
     })
 );
 
@@ -29,5 +31,3 @@ export const destroySession = () => (
         url: `/api/session/`,
     })
 );
-
-// let testUser = { user: { username: 'petermatera', password: 'abcdef', email: 'peter@gmail.com'}}

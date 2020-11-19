@@ -9,4 +9,6 @@ class Release < ApplicationRecord
         class_name: "User",
         foreign_key: "artist_id"
 
+    has_one_attached :photo
+
 end

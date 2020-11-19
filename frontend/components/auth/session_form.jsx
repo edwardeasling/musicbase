@@ -7,19 +7,41 @@ const SessionForm = ({ errors, formType, processForm }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [description, setDescription] = useState("");
+    const [photoFile, setPhotoFile] = useState(null);
 
     const history = useHistory();
 
-
     let handleSubmit = e => {
         e.preventDefault();
-        const user = { user: { username: username, password: password, email: email, description: description }};
+
+        let user
+        if (formType == 'login') {
+            user = { user: { username: username, password: password, email: email, description: description }};
+        } else {
+            user = new FormData();
+            user.append('user[username]', username)
+            user.append('user[password]', password)
+            user.append('user[email]', email)
+            user.append('user[description]', description)
+            user.append('user[photo]', photoFile)
+        }
         processForm(user).then(() => history.push('/'));
+    }
+
+    const handleFile = (e) => {
+        e.preventDefault();
+        setPhotoFile(e.currentTarget.files[0]);
+    }
+
+    let errorText;
+    if (formType == 'login') {
+        errorText = errors ? "Login failed (form may be missing data)" : "";
+    } else {
+        errorText = errors ? "Signup failed (form may be missing data)" : "";
     }
 
     const headerText = formType === 'login' ? 'Login to your account' : 'Create a new account';
     const submitText = formType === 'login' ? 'Login' : 'Create account';
-    const errorsList = errors ? errors.map((error, idx) => <li key={idx}>{error}</li>) : "";
     const emailInput = formType === 'login' ? "" : (
         <div className="form-inputcontainer">
             <label>Email</label>
@@ -30,6 +52,12 @@ const SessionForm = ({ errors, formType, processForm }) => {
         <div className="form-inputcontainer">
             <label>Description</label>
             <input className="form-input" type="text" value={description} onChange={e => setDescription(e.target.value)} />
+        </div>
+    )
+    const photoInput = formType === 'login' ? "" : (
+        <div className="form-inputcontainer">
+            <label>Artist photo</label>
+            <input className="form-input" type="file" onChange={ handleFile } />
         </div>
     )
 
@@ -47,8 +75,9 @@ const SessionForm = ({ errors, formType, processForm }) => {
                 </div>
                 { emailInput }
                 { descriptionInput }
+                { photoInput }
                 <input type="submit" value={ submitText } className="form-submitbutton"/>
-                <ul> {errorsList} </ul>
+                <p className="form-errors"> {errorText} </p>
             </form>
         </div>
     )

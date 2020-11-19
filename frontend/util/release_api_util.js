@@ -5,7 +5,9 @@ export const createRelease = (release, artistId) => (
             'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content
         },
         url: `/api/users/${artistId}/releases`,
-        data: release
+        data: release,
+        processData: false,
+        contentType: false
     })
 );
 

@@ -11,7 +11,7 @@ const Greeting = ({ currentUser, logout }) => {
     const loggedInGreeting = () => (
         <section className="header-right">
             <h3 className="header-right-greetingtext">Logged in as <Link to={userPagePath} className="header-button">{currentUser.username}</Link></h3>
-            <Link to='/new_release' className="header-right-greetingtext">Create new release</Link>
+            <Link to='/new_release' className="header-right-greetingtext header-button">Create new release</Link>
             <p className="header-right-greetingtext header-button" onClick={logout}>Logout</p>
         </section>
     )

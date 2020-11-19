@@ -12,6 +12,8 @@ class User < ApplicationRecord
         class_name: "Release",
         foreign_key: "artist_id"
 
+    has_one_attached :photo
+
     def self.find_by_credentials(username, password)
         # return user object if correct credentials provided
         user = User.find_by(username: username)

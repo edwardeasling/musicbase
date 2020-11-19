@@ -30,5 +30,15 @@ export const fetchUserInfo = userId => dispatch => getUserReleases(userId)
 export const createNewRelease = (release, artistId) => dispatch => createRelease(release, artistId)
     .then(
         release => dispatch(receiveRelease(release)),
-        err => (dispatch(receiveReleaseErrors(err.responseJSON))) 
+        err => {
+        dispatch(receiveReleaseErrors([err.statusText]));
+        console.log(err); }
     );
+
+// export const createNewRelease = (release, artistId) => dispatch => createRelease(release, artistId)
+//     .then(
+//         release => dispatch(receiveRelease(release)),
+//         err => {
+//         dispatch(receiveReleaseErrors(err.responseJSON));
+//         console.log(err); }
+//     );

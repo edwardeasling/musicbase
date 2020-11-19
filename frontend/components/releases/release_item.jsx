@@ -8,7 +8,7 @@ const ReleaseItem = ({ release, type }) => {
 
     return (
         <li className="release-item">
-            <img className="release-item-image" src="https://f4.bcbits.com/img/a0043393937_2.jpg"></img>
+            <img className="release-item-image" src={release.photoUrl}></img>
             {artistLine}
             <p className="release-title">{release.title}</p>
             {genreLine}
