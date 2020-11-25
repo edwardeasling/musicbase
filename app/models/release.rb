@@ -9,6 +9,12 @@ class Release < ApplicationRecord
         class_name: "User",
         foreign_key: "artist_id"
 
-    has_one_attached :photo
+    has_many :tracks,
+        class_name: "Track",
+        foreign_key: "release_id",
+        :dependent => :destroy
+
+    has_one_attached :photo, 
+        :dependent => :destroy
 
 end

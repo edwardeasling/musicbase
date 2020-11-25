@@ -18,8 +18,9 @@ class Api::ReleasesController < ApplicationController
         render :index
     end
 
-    # def show
-    # end
+    def show
+        @release = Release.find(params[:id])
+    end
 
     # def destroy
     # end

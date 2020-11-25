@@ -8,7 +8,10 @@ Rails.application.routes.draw do
       resources :releases, only: [:index, :create]
     end
     resource :session, only: [:create, :destroy]
-    resources :releases, only: [:show, :destroy, :index]
+    resources :releases, only: [:show, :destroy, :index] do
+      resources :tracks, only: [:index]
+    end
+    resources :tracks, only: [:create]
   end
 
 end

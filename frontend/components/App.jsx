@@ -4,6 +4,7 @@ import LoginFormContainer from './auth/login_form_container';
 import SignupFormContainer from './auth/signup_form_container';
 import ReleasesIndexContainer from './releases/releases_index_container';
 import ReleaseFormContainer from './releases/release_form_container';
+import ReleaseDetailContainer from './releases/release_detail_container';
 import ArtistDetailContainer from './artist/artist_detail_container';
 import { Route, Switch, Link } from 'react-router-dom';
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
@@ -26,6 +27,7 @@ const App = () => {
                     <AuthRoute exact path="/login" component={ LoginFormContainer } />
                     <AuthRoute exact path="/signup" component={ SignupFormContainer } />
                     <Route path="/artist/:artistId/" component={ArtistDetailContainer} />
+                    <Route path="/releases/:releaseId/" component={ReleaseDetailContainer} />
                     <Route exact path="/" component={ ReleasesIndexContainer } />
                     <ProtectedRoute exact path="/new_release" component={ ReleaseFormContainer } />
                 </Switch> 

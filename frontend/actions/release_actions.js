@@ -1,4 +1,4 @@
-import { getRandomReleases, getUserReleases, createRelease } from '../util/release_api_util';
+import { getRandomReleases, getUserReleases, createRelease, getSingleRelease } from '../util/release_api_util';
 import { fetchArtist} from './artist_actions';
 
 export const RECEIVE_RELEASES = "RECEIVE_RELEASES";
@@ -27,6 +27,9 @@ export const fetchUserInfo = userId => dispatch => getUserReleases(userId)
     .then(releases => dispatch(receiveReleases(releases)))
     .then(dispatch(fetchArtist(userId)))
 
+export const fetchSingleRelease = releaseId => dispatch => getSingleRelease(releaseId)
+    .then(release => dispatch(receiveRelease(release)))
+
 export const createNewRelease = (release, artistId) => dispatch => createRelease(release, artistId)
     .then(
         release => dispatch(receiveRelease(release)),
@@ -34,11 +37,3 @@ export const createNewRelease = (release, artistId) => dispatch => createRelease
         dispatch(receiveReleaseErrors([err.statusText]));
         console.log(err); }
     );
-
-// export const createNewRelease = (release, artistId) => dispatch => createRelease(release, artistId)
-//     .then(
-//         release => dispatch(receiveRelease(release)),
-//         err => {
-//         dispatch(receiveReleaseErrors(err.responseJSON));
-//         console.log(err); }
-//     );

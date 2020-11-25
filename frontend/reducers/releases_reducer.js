@@ -7,7 +7,7 @@ export default (state = {}, action) => {
         case RECEIVE_RELEASES:
             return Object.assign({}, action.releases);
         case RECEIVE_RELEASE:
-            return Object.assign({});
+            return Object.assign({}, action.release);
         default:
             return state;
     }

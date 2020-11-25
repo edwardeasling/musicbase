@@ -10,9 +10,11 @@ class User < ApplicationRecord
 
     has_many :releases,
         class_name: "Release",
-        foreign_key: "artist_id"
+        foreign_key: "artist_id",
+        :dependent => :destroy
 
-    has_one_attached :photo
+    has_one_attached :photo, 
+        :dependent => :destroy
 
     def self.find_by_credentials(username, password)
         # return user object if correct credentials provided
