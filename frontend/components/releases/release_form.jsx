@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from 'react-router-dom';
 
-const SessionForm = ({ errors, currentUserId, createNewRelease }) => {
+const ReleaseForm = ({ errors, currentUserId, createNewRelease }) => {
 
     const [title, setTitle] = useState("");
     const [label, setLabel] = useState("");
@@ -82,4 +82,4 @@ const SessionForm = ({ errors, currentUserId, createNewRelease }) => {
 
 }
 
-export default SessionForm;
+export default ReleaseForm;
