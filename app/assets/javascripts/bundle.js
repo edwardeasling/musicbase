@@ -189,8 +189,7 @@ var createNewRelease = function createNewRelease(release, artistId) {
     return Object(_util_release_api_util__WEBPACK_IMPORTED_MODULE_0__["createRelease"])(release, artistId).then(function (release) {
       return dispatch(receiveRelease(release));
     }, function (err) {
-      dispatch(receiveReleaseErrors([err.statusText]));
-      console.log(err);
+      return dispatch(receiveReleaseErrors([err.statusText]));
     });
   };
 };
@@ -279,16 +278,21 @@ var signup = function signup(user) {
 /*!*******************************************!*\
   !*** ./frontend/actions/track_actions.js ***!
   \*******************************************/
-/*! exports provided: RECEIVE_TRACKS, fetchTracks */
+/*! exports provided: RECEIVE_TRACKS, RECEIVE_TRACK, RECEIVE_TRACK_ERRORS, fetchTracks, createNewTrack */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_TRACKS", function() { return RECEIVE_TRACKS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_TRACK", function() { return RECEIVE_TRACK; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_TRACK_ERRORS", function() { return RECEIVE_TRACK_ERRORS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTracks", function() { return fetchTracks; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNewTrack", function() { return createNewTrack; });
 /* harmony import */ var _util_track_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/track_api_util */ "./frontend/util/track_api_util.js");
 
 var RECEIVE_TRACKS = "RECEIVE_TRACKS";
+var RECEIVE_TRACK = "RECEIVE_TRACK";
+var RECEIVE_TRACK_ERRORS = "RECEIVE_TRACK_ERRORS";
 
 var receiveTracks = function receiveTracks(tracks) {
   return {
@@ -297,10 +301,33 @@ var receiveTracks = function receiveTracks(tracks) {
   };
 };
 
+var receiveTrack = function receiveTrack(track) {
+  return {
+    type: RECEIVE_TRACK,
+    track: track
+  };
+};
+
+var receiveTrackErrors = function receiveTrackErrors(errors) {
+  return {
+    type: RECEIVE_TRACK_ERRORS,
+    errors: errors
+  };
+};
+
 var fetchTracks = function fetchTracks(releaseId) {
   return function (dispatch) {
     return Object(_util_track_api_util__WEBPACK_IMPORTED_MODULE_0__["getTracks"])(releaseId).then(function (tracks) {
       return dispatch(receiveTracks(tracks));
+    });
+  };
+};
+var createNewTrack = function createNewTrack(track) {
+  return function (dispatch) {
+    return Object(_util_track_api_util__WEBPACK_IMPORTED_MODULE_0__["createTrack"])(track).then(function (track) {
+      return dispatch(receiveTrack(track));
+    }, function (err) {
+      return dispatch(receiveTrackErrors(err));
     });
   };
 };
@@ -1349,14 +1376,15 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
- // import { useHistory } from 'react-router-dom';
+
 
 var TrackForm = function TrackForm(_ref) {
   var errors = _ref.errors,
-      createTrack = _ref.createTrack,
+      createNewTrack = _ref.createNewTrack,
       currentUserId = _ref.currentUserId,
       fetchReleases = _ref.fetchReleases,
       releases = _ref.releases;
+  var history = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useHistory"])();
   var paramsReleaseId = parseInt(Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useParams"])().releaseId);
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(""),
@@ -1372,8 +1400,7 @@ var TrackForm = function TrackForm(_ref) {
   var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(paramsReleaseId),
       _useState6 = _slicedToArray(_useState5, 2),
       release_id = _useState6[0],
-      setReleaseId = _useState6[1]; // const history = useHistory();
-
+      setReleaseId = _useState6[1];
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     // fetches releases from database
@@ -1399,16 +1426,19 @@ var TrackForm = function TrackForm(_ref) {
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
     var newTrack = new FormData();
-    newTrack.append('release[title]', title);
-    newTrack.append('release[track_no]', track_no);
-    newTrack.append('release[release_id]', release_id); // createNewRelease(newRelease, currentUserId).then(() => history.push(`/artist/${currentUserId}`));
+    newTrack.append('track[title]', title);
+    newTrack.append('track[track_no]', track_no);
+    newTrack.append('track[release_id]', release_id);
+    createNewTrack(newTrack).then(function () {
+      return history.push("/releases/".concat(paramsReleaseId));
+    });
   }; // const handleFile = (e) => {
   //     e.preventDefault();
   //     setPhotoFile(e.currentTarget.files[0]);
   // }
-  // const errorsList = errors ? "Upload failed (form may be missing data)" : "";
 
 
+  var errorsList = errors ? "Upload failed (form may be missing data)" : "";
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "form-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
@@ -1420,7 +1450,7 @@ var TrackForm = function TrackForm(_ref) {
     value: defaultValue,
     options: releaseOptions,
     onChange: function onChange(val) {
-      return setReleaseId(val);
+      return setReleaseId(val.value);
     },
     className: "form-input"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1445,7 +1475,9 @@ var TrackForm = function TrackForm(_ref) {
     type: "submit",
     value: "Add Track",
     className: "form-submitbutton"
-  })));
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "form-errors"
+  }, " ", errorsList, " ")));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (TrackForm);
@@ -1464,17 +1496,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _track_form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./track_form */ "./frontend/components/tracks/track_form.jsx");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_release_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/release_actions */ "./frontend/actions/release_actions.js");
+/* harmony import */ var _actions_track_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/track_actions */ "./frontend/actions/track_actions.js");
 
 
- // import { createTrack } from '../../actions/track_actions';
+
+
 
 var mapStateToProps = function mapStateToProps(_ref) {
   var entities = _ref.entities,
-      session = _ref.session;
+      session = _ref.session,
+      errors = _ref.errors;
   return {
     releases: entities.releases,
-    currentUserId: session.id // errors: state.errors.release.errors,
-
+    currentUserId: session.id,
+    errors: errors.track.errors
   };
 };
 
@@ -1482,8 +1517,10 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     fetchReleases: function fetchReleases(artistId) {
       return dispatch(Object(_actions_release_actions__WEBPACK_IMPORTED_MODULE_2__["fetchUserInfo"])(artistId));
-    } // createTrack: (track) => dispatch(createTrack(track))
-
+    },
+    createNewTrack: function createNewTrack(track) {
+      return dispatch(Object(_actions_track_actions__WEBPACK_IMPORTED_MODULE_3__["createNewTrack"])(track));
+    }
   };
 };
 
@@ -1612,6 +1649,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _login_errors_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./login_errors_reducer */ "./frontend/reducers/login_errors_reducer.js");
 /* harmony import */ var _signup_errors_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./signup_errors_reducer */ "./frontend/reducers/signup_errors_reducer.js");
 /* harmony import */ var _release_errors_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./release_errors_reducer */ "./frontend/reducers/release_errors_reducer.js");
+/* harmony import */ var _track_errors_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./track_errors_reducer */ "./frontend/reducers/track_errors_reducer.js");
+
 
 
 
@@ -1619,7 +1658,8 @@ __webpack_require__.r(__webpack_exports__);
 var errorsReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   login: _login_errors_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
   signup: _signup_errors_reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
-  release: _release_errors_reducer__WEBPACK_IMPORTED_MODULE_3__["default"]
+  release: _release_errors_reducer__WEBPACK_IMPORTED_MODULE_3__["default"],
+  track: _track_errors_reducer__WEBPACK_IMPORTED_MODULE_4__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (errorsReducer);
 
@@ -1812,6 +1852,38 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./frontend/reducers/track_errors_reducer.js":
+/*!***************************************************!*\
+  !*** ./frontend/reducers/track_errors_reducer.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_track_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/track_actions */ "./frontend/actions/track_actions.js");
+
+/* harmony default export */ __webpack_exports__["default"] = (function () {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+
+  switch (action.type) {
+    case _actions_track_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_TRACK"]:
+      return [];
+
+    case _actions_track_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_TRACK_ERRORS"]:
+      return Object.assign([], {
+        errors: action.errors
+      });
+
+    default:
+      return state;
+  }
+});
+
+/***/ }),
+
 /***/ "./frontend/reducers/tracks_reducer.js":
 /*!*********************************************!*\
   !*** ./frontend/reducers/tracks_reducer.js ***!
@@ -1831,6 +1903,9 @@ __webpack_require__.r(__webpack_exports__);
   switch (action.type) {
     case _actions_track_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_TRACKS"]:
       return Object.assign({}, action.tracks);
+
+    case _actions_track_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_TRACK"]:
+      return Object.assign({}, action.track);
 
     default:
       return state;

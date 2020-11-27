@@ -33,7 +33,5 @@ export const fetchSingleRelease = releaseId => dispatch => getSingleRelease(rele
 export const createNewRelease = (release, artistId) => dispatch => createRelease(release, artistId)
     .then(
         release => dispatch(receiveRelease(release)),
-        err => {
-        dispatch(receiveReleaseErrors([err.statusText]));
-        console.log(err); }
+        err => dispatch(receiveReleaseErrors([err.statusText]))
     );

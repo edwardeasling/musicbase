@@ -1,23 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import Select from 'react-select'
-// import { useHistory } from 'react-router-dom';
 
-const TrackForm = ({ errors, createTrack, currentUserId, fetchReleases, releases }) => {
+const TrackForm = ({ errors, createNewTrack, currentUserId, fetchReleases, releases }) => {
 
+    const history = useHistory();
     const paramsReleaseId = parseInt(useParams().releaseId);
-
     const [title, setTitle] = useState("");
     const [track_no, setTrackNo] = useState("");
     const [release_id, setReleaseId] = useState(paramsReleaseId);
-
-    // const history = useHistory();
-
+    
     useEffect(() => {
         // fetches releases from database
         fetchReleases(currentUserId);
     }, []);
-
+    
     // creates options for form
     let releaseOptions = [];
     let defaultValue;
@@ -25,15 +22,14 @@ const TrackForm = ({ errors, createTrack, currentUserId, fetchReleases, releases
         (Object.values(releases)).sort().forEach(release => releaseOptions.push({ value: release.id, label: release.title}));
         defaultValue = { value: paramsReleaseId, label: releases[paramsReleaseId].title}
     }
-
+    
     const handleSubmit = (e) => {
         e.preventDefault();
         const newTrack = new FormData();
-        newTrack.append('release[title]', title)
-        newTrack.append('release[track_no]', track_no)
-        newTrack.append('release[release_id]', release_id)
-
-        // createNewRelease(newRelease, currentUserId).then(() => history.push(`/artist/${currentUserId}`));
+        newTrack.append('track[title]', title)
+        newTrack.append('track[track_no]', track_no)
+        newTrack.append('track[release_id]', release_id)
+        createNewTrack(newTrack).then(() => history.push(`/releases/${paramsReleaseId}`));
     }
 
     // const handleFile = (e) => {
@@ -41,7 +37,7 @@ const TrackForm = ({ errors, createTrack, currentUserId, fetchReleases, releases
     //     setPhotoFile(e.currentTarget.files[0]);
     // }
 
-    // const errorsList = errors ? "Upload failed (form may be missing data)" : "";
+    const errorsList = errors ? "Upload failed (form may be missing data)" : "";
 
     return (
         <div className="form-container">
@@ -49,7 +45,7 @@ const TrackForm = ({ errors, createTrack, currentUserId, fetchReleases, releases
                 <h2>Add a new track</h2>
                 <div className="form-inputcontainer">
                     <label>Release Name</label>
-                    <Select value={defaultValue} options={releaseOptions} onChange={val => setReleaseId(val)} className="form-input" />
+                    <Select value={defaultValue} options={releaseOptions} onChange={val => setReleaseId(val.value)} className="form-input" />
                 </div>
                 <div className="form-inputcontainer">
                     <label>Title</label>
@@ -60,7 +56,7 @@ const TrackForm = ({ errors, createTrack, currentUserId, fetchReleases, releases
                     <input className="form-input" type="text" value={track_no} onChange={e => setTrackNo(e.target.value)} />
                 </div>
                 <input type="submit" value="Add Track" className="form-submitbutton" />
-                {/* <p className="form-errors"> {errorsList} </p> */}
+                <p className="form-errors"> {errorsList} </p>
             </form>
         </div>
     )
