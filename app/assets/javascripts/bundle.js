@@ -854,26 +854,35 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _releases_release_detail_table__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../releases/release_detail_table */ "./frontend/components/releases/release_detail_table.jsx");
+/* harmony import */ var _release_detail_table__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./release_detail_table */ "./frontend/components/releases/release_detail_table.jsx");
+/* harmony import */ var _tracks_track_table__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../tracks/track_table */ "./frontend/components/tracks/track_table.jsx");
+
 
 
 
 
 var ReleaseDetail = function ReleaseDetail(_ref) {
   var releases = _ref.releases,
+      tracks = _ref.tracks,
       fetchSingleRelease = _ref.fetchSingleRelease,
-      fetchTracks = _ref.fetchTracks;
+      fetchTracks = _ref.fetchTracks,
+      currentUserId = _ref.currentUserId;
   var releaseId = parseInt(Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useParams"])().releaseId);
   var release = releases[releaseId];
-  var releaseDetailTable = release ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_releases_release_detail_table__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  var newTrackLink = release && currentUserId == release.artist_id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    to: '/new_track/' + releaseId
+  }, "Add Track") : "";
+  var releaseDetailTable = release ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_release_detail_table__WEBPACK_IMPORTED_MODULE_2__["default"], {
     releaseInfo: release
   }) : "";
+  var trackTable = Object.entries(tracks).length > 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tracks_track_table__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    tracks: tracks
+  }) : "";
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    // fetches releases from database
     fetchSingleRelease(releaseId);
     fetchTracks(releaseId);
   }, []);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, releaseDetailTable);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, newTrackLink, releaseDetailTable, trackTable);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (ReleaseDetail);
@@ -899,9 +908,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var mapStateToProps = function mapStateToProps(_ref) {
-  var entities = _ref.entities;
+  var entities = _ref.entities,
+      session = _ref.session;
   return {
-    releases: entities.releases
+    releases: entities.releases,
+    tracks: entities.tracks,
+    currentUserId: session.id
   };
 };
 
@@ -1525,6 +1537,38 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(_track_form__WEBPACK_IMPORTED_MODULE_0__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/tracks/track_table.jsx":
+/*!****************************************************!*\
+  !*** ./frontend/components/tracks/track_table.jsx ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
+
+
+var TrackTable = function TrackTable(_ref) {
+  var tracks = _ref.tracks;
+  var sortedTracks = Object.values(tracks).sort(function (a, b) {
+    return a.track_no - b.track_no;
+  });
+  var trackItems = sortedTracks.map(function (track, idx) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      key: idx
+    }, "#", track.track_no, ": ", track.title);
+  });
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, trackItems);
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (TrackTable);
 
 /***/ }),
 
