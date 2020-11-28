@@ -28,7 +28,10 @@ export const fetchUserInfo = userId => dispatch => getUserReleases(userId)
     .then(dispatch(fetchArtist(userId)))
 
 export const fetchSingleRelease = releaseId => dispatch => getSingleRelease(releaseId)
-    .then(release => dispatch(receiveRelease(release)))
+    .then(release => {
+        dispatch(receiveRelease(release));
+        dispatch(fetchArtist(release[releaseId].artist_id));
+    });
 
 export const createNewRelease = (release, artistId) => dispatch => createRelease(release, artistId)
     .then(

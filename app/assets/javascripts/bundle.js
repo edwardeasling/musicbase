@@ -180,7 +180,8 @@ var fetchUserInfo = function fetchUserInfo(userId) {
 var fetchSingleRelease = function fetchSingleRelease(releaseId) {
   return function (dispatch) {
     return Object(_util_release_api_util__WEBPACK_IMPORTED_MODULE_0__["getSingleRelease"])(releaseId).then(function (release) {
-      return dispatch(receiveRelease(release));
+      dispatch(receiveRelease(release));
+      dispatch(Object(_artist_actions__WEBPACK_IMPORTED_MODULE_1__["fetchArtist"])(release[releaseId].artist_id));
     });
   };
 };
@@ -854,8 +855,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _release_detail_table__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./release_detail_table */ "./frontend/components/releases/release_detail_table.jsx");
-/* harmony import */ var _tracks_track_table__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../tracks/track_table */ "./frontend/components/tracks/track_table.jsx");
+/* harmony import */ var _release_detail_table_left__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./release_detail_table_left */ "./frontend/components/releases/release_detail_table_left.jsx");
+/* harmony import */ var _release_detail_table_right__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./release_detail_table_right */ "./frontend/components/releases/release_detail_table_right.jsx");
+/* harmony import */ var _tracks_track_table__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../tracks/track_table */ "./frontend/components/tracks/track_table.jsx");
+/* harmony import */ var react_audio_player__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-audio-player */ "./node_modules/react-audio-player/dist/bundle.js");
+/* harmony import */ var react_audio_player__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_audio_player__WEBPACK_IMPORTED_MODULE_5__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
 
 
 
@@ -864,25 +882,51 @@ __webpack_require__.r(__webpack_exports__);
 var ReleaseDetail = function ReleaseDetail(_ref) {
   var releases = _ref.releases,
       tracks = _ref.tracks,
+      artists = _ref.artists,
       fetchSingleRelease = _ref.fetchSingleRelease,
       fetchTracks = _ref.fetchTracks,
       currentUserId = _ref.currentUserId;
   var releaseId = parseInt(Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useParams"])().releaseId);
   var release = releases[releaseId];
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "audio-player"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_audio_player__WEBPACK_IMPORTED_MODULE_5___default.a, {
+    src: "",
+    controls: true,
+    className: "audio-player"
+  }))),
+      _useState2 = _slicedToArray(_useState, 2),
+      player = _useState2[0],
+      setPlayer = _useState2[1];
+
   var newTrackLink = release && currentUserId == release.artist_id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     to: '/new_track/' + releaseId
   }, "Add Track") : "";
-  var releaseDetailTable = release ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_release_detail_table__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  var artistName = Object.entries(artists).length > 0 && Object.entries(releases).length > 0 ? artists[release.artist_id].username : "";
+  var releaseDetailTableLeft = release ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_release_detail_table_left__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    releaseInfo: release,
+    artistName: artistName,
+    player: player
+  }) : "";
+  var releaseDetailTableRight = release ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_release_detail_table_right__WEBPACK_IMPORTED_MODULE_3__["default"], {
     releaseInfo: release
   }) : "";
-  var trackTable = Object.entries(tracks).length > 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tracks_track_table__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    tracks: tracks
+  var trackTable = Object.entries(tracks).length > 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tracks_track_table__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    tracks: tracks,
+    setPlayer: setPlayer
   }) : "";
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     fetchSingleRelease(releaseId);
     fetchTracks(releaseId);
   }, []);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, newTrackLink, releaseDetailTable, trackTable);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "release-detail-container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "release-detail-left"
+  }, releaseDetailTableLeft, trackTable, newTrackLink), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "release-detail-left"
+  }, releaseDetailTableRight));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (ReleaseDetail);
@@ -913,6 +957,7 @@ var mapStateToProps = function mapStateToProps(_ref) {
   return {
     releases: entities.releases,
     tracks: entities.tracks,
+    artists: entities.artists,
     currentUserId: session.id
   };
 };
@@ -932,10 +977,55 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
-/***/ "./frontend/components/releases/release_detail_table.jsx":
-/*!***************************************************************!*\
-  !*** ./frontend/components/releases/release_detail_table.jsx ***!
-  \***************************************************************/
+/***/ "./frontend/components/releases/release_detail_table_left.jsx":
+/*!********************************************************************!*\
+  !*** ./frontend/components/releases/release_detail_table_left.jsx ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
+
+
+var ReleaseDetailTableLeft = function ReleaseDetailTableLeft(_ref) {
+  var releaseInfo = _ref.releaseInfo,
+      artistName = _ref.artistName,
+      player = _ref.player;
+  var artistUrl = "/artist/".concat(releaseInfo.artist_id);
+  var artistLink = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    to: artistUrl,
+    className: "release-detail-artistlink"
+  }, artistName);
+  var purchaseLink = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    href: "#",
+    className: "release-detail-purchaseLink"
+  }, "$", releaseInfo.price, " USD");
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "release-detail-left-info"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "release-detail-title"
+  }, releaseInfo.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "release-detail-artistname"
+  }, "By ", artistLink), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "player-container"
+  }, player), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "release-detail-price"
+  }, "Purchase for ", purchaseLink));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (ReleaseDetailTableLeft);
+
+/***/ }),
+
+/***/ "./frontend/components/releases/release_detail_table_right.jsx":
+/*!*********************************************************************!*\
+  !*** ./frontend/components/releases/release_detail_table_right.jsx ***!
+  \*********************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -945,14 +1035,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
 
-var ReleaseDetailTable = function ReleaseDetailTable(_ref) {
+var ReleaseDetailTableRight = function ReleaseDetailTableRight(_ref) {
   var releaseInfo = _ref.releaseInfo;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, releaseInfo.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, releaseInfo.year), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, releaseInfo.release_type), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, releaseInfo.label), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, releaseInfo.genre), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, releaseInfo.price), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
     src: releaseInfo.photoUrl
-  }));
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, releaseInfo.year), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, releaseInfo.release_type), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, releaseInfo.genre), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, releaseInfo.label));
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (ReleaseDetailTable);
+/* harmony default export */ __webpack_exports__["default"] = (ReleaseDetailTableRight);
 
 /***/ }),
 
@@ -1569,15 +1659,24 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var TrackTable = function TrackTable(_ref) {
-  var track = _ref.track;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "#", track.track_no, ": ", track.title, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_audio_player__WEBPACK_IMPORTED_MODULE_1___default.a, {
-    src: track.songUrl,
-    controls: true
-  }));
+var TrackItem = function TrackItem(_ref) {
+  var track = _ref.track,
+      setPlayer = _ref.setPlayer;
+
+  var addPlayer = function addPlayer() {
+    return setPlayer( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_audio_player__WEBPACK_IMPORTED_MODULE_1___default.a, {
+      src: track.songUrl,
+      controls: true,
+      className: "audio-player"
+    }));
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "#", track.track_no, ": ", track.title, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: addPlayer
+  }, "Play"));
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (TrackTable);
+/* harmony default export */ __webpack_exports__["default"] = (TrackItem);
 
 /***/ }),
 
@@ -1597,13 +1696,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var TrackTable = function TrackTable(_ref) {
-  var tracks = _ref.tracks;
+  var tracks = _ref.tracks,
+      setPlayer = _ref.setPlayer;
   var sortedTracks = Object.values(tracks).sort(function (a, b) {
     return a.track_no - b.track_no;
   });
   var trackItems = sortedTracks.map(function (track, idx) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_track_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
       track: track,
+      setPlayer: setPlayer,
       key: idx
     });
   });

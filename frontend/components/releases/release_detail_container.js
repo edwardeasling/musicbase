@@ -6,7 +6,8 @@ import { fetchTracks } from '../../actions/track_actions';
 const mapStateToProps = ({entities, session}) => ({
     releases: entities.releases,
     tracks: entities.tracks,
-    currentUserId: session.id
+    artists: entities.artists,
+    currentUserId: session.id,
 });
 
 const mapDispatchToProps = (dispatch) => ({

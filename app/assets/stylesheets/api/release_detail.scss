@@ -1,0 +1,41 @@
+.release-detail-container {
+    display: flex;
+    margin-top: 10px;
+}
+
+// left-side
+
+.release-detail-left {
+    min-width: 300px;
+    margin-right: 10px;
+}
+
+.release-detail-left-info {
+    border: 1px solid gray;
+}
+
+.player-container {
+    height: 55px;
+}
+
+.release-detail-title {
+    font-size: 34px;
+    font-weight: bold;
+}
+
+.release-detail-artistlink {
+    color: darkmagenta;
+}
+
+.release-detail-artistlink:hover, .release-detail-purchaseLink:hover {
+    text-decoration: underline;
+}
+
+.release-detail-price {
+    font-style: italic;
+}
+
+.release-detail-left-info > p {
+    margin: 6px;
+    font-size: 22px;
+}
