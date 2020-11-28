@@ -1414,6 +1414,11 @@ var TrackForm = function TrackForm(_ref) {
       release_id = _useState6[0],
       setReleaseId = _useState6[1];
 
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
+      _useState8 = _slicedToArray(_useState7, 2),
+      songFile = _useState8[0],
+      setSongFile = _useState8[1];
+
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     // fetches releases from database
     fetchReleases(currentUserId);
@@ -1441,14 +1446,16 @@ var TrackForm = function TrackForm(_ref) {
     newTrack.append('track[title]', title);
     newTrack.append('track[track_no]', track_no);
     newTrack.append('track[release_id]', release_id);
+    newTrack.append('track[song]', songFile);
     createNewTrack(newTrack).then(function () {
       return history.push("/releases/".concat(paramsReleaseId));
     });
-  }; // const handleFile = (e) => {
-  //     e.preventDefault();
-  //     setPhotoFile(e.currentTarget.files[0]);
-  // }
+  };
 
+  var handleFile = function handleFile(e) {
+    e.preventDefault();
+    setSongFile(e.currentTarget.files[0]);
+  };
 
   var errorsList = errors ? "Upload failed (form may be missing data)" : "";
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1483,6 +1490,12 @@ var TrackForm = function TrackForm(_ref) {
     onChange: function onChange(e) {
       return setTrackNo(e.target.value);
     }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-inputcontainer"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Audio File"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    className: "form-input",
+    type: "file",
+    onChange: handleFile
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     type: "submit",
     value: "Add Track",

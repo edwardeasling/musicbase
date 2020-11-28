@@ -9,6 +9,7 @@ const TrackForm = ({ errors, createNewTrack, currentUserId, fetchReleases, relea
     const [title, setTitle] = useState("");
     const [track_no, setTrackNo] = useState("");
     const [release_id, setReleaseId] = useState(paramsReleaseId);
+    const [songFile, setSongFile] = useState(null);
     
     useEffect(() => {
         // fetches releases from database
@@ -29,13 +30,14 @@ const TrackForm = ({ errors, createNewTrack, currentUserId, fetchReleases, relea
         newTrack.append('track[title]', title)
         newTrack.append('track[track_no]', track_no)
         newTrack.append('track[release_id]', release_id)
+        newTrack.append('track[song]', songFile)
         createNewTrack(newTrack).then(() => history.push(`/releases/${paramsReleaseId}`));
     }
 
-    // const handleFile = (e) => {
-    //     e.preventDefault();
-    //     setPhotoFile(e.currentTarget.files[0]);
-    // }
+    const handleFile = (e) => {
+        e.preventDefault();
+        setSongFile(e.currentTarget.files[0]);
+    }
 
     const errorsList = errors ? "Upload failed (form may be missing data)" : "";
 
@@ -54,6 +56,10 @@ const TrackForm = ({ errors, createNewTrack, currentUserId, fetchReleases, relea
                 <div className="form-inputcontainer">
                     <label>Track No</label>
                     <input className="form-input" type="text" value={track_no} onChange={e => setTrackNo(e.target.value)} />
+                </div>
+                <div className="form-inputcontainer">
+                    <label>Audio File</label>
+                    <input className="form-input" type="file" onChange={handleFile} />
                 </div>
                 <input type="submit" value="Add Track" className="form-submitbutton" />
                 <p className="form-errors"> {errorsList} </p>
