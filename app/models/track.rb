@@ -7,4 +7,7 @@ class Track < ApplicationRecord
     belongs_to :release,
         class_name: "Release",
         foreign_key: "release_id"
+
+    has_one_attached :song,
+        :dependent => :destroy
 end
