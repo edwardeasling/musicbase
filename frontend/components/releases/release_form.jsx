@@ -7,7 +7,7 @@ const ReleaseForm = ({ errors, currentUserId, createNewRelease }) => {
     const [label, setLabel] = useState("");
     const [genre, setGenre] = useState("");
     const [year, setYear] = useState("");
-    const [releaseType, setReleaseType] = useState("album");
+    const [releaseType, setReleaseType] = useState("Album");
     const [price, setPrice] = useState("");
     const [photoFile, setPhotoFile] = useState(null);
 
@@ -59,11 +59,11 @@ const ReleaseForm = ({ errors, currentUserId, createNewRelease }) => {
                 <div className="form-inputcontainer">
                     <label>Type</label>
                     <select value={releaseType} onChange={e => setReleaseType(e.target.value)} className="form-input">
-                        <option value="album">Album</option>
-                        <option value="anthology">Anthology</option>
-                        <option value="compilation">Compilation</option>
-                        <option value="ep">EP</option>
-                        <option value="single">Single</option>
+                        <option value="Album">Album</option>
+                        <option value="Anthology">Anthology</option>
+                        <option value="Compilation">Compilation</option>
+                        <option value="EP">EP</option>
+                        <option value="Single">Single</option>
                     </select>
                 </div>
                 <div className="form-inputcontainer">

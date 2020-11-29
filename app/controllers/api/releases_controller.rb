@@ -2,7 +2,7 @@ class Api::ReleasesController < ApplicationController
 
     def create
         @release = Release.new(release_params)
-        if @release.save
+        if @release.save!
             render :show
         else
             render json: @release.errors.full_messages, status: 401

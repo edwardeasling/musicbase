@@ -1111,7 +1111,7 @@ var ReleaseForm = function ReleaseForm(_ref) {
       year = _useState8[0],
       setYear = _useState8[1];
 
-  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])("album"),
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])("Album"),
       _useState10 = _slicedToArray(_useState9, 2),
       releaseType = _useState10[0],
       setReleaseType = _useState10[1];
@@ -1200,15 +1200,15 @@ var ReleaseForm = function ReleaseForm(_ref) {
     },
     className: "form-input"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-    value: "album"
+    value: "Album"
   }, "Album"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-    value: "anthology"
+    value: "Anthology"
   }, "Anthology"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-    value: "compilation"
+    value: "Compilation"
   }, "Compilation"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-    value: "ep"
+    value: "EP"
   }, "EP"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-    value: "single"
+    value: "Single"
   }, "Single"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "form-inputcontainer"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Price"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
