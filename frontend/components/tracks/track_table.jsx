@@ -7,7 +7,7 @@ const TrackTable = ({ tracks, setPlayer }) => {
     const trackItems = sortedTracks.map((track, idx) => <TrackItem track={track} setPlayer={setPlayer} key={idx} />);
 
     return (
-        <ul>
+        <ul className="track-table">
             {trackItems}
         </ul>
     )

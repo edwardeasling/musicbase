@@ -904,12 +904,12 @@ var ReleaseDetail = function ReleaseDetail(_ref) {
     to: '/new_track/' + releaseId
   }, "Add Track") : "";
   var artistName = Object.entries(artists).length > 0 && Object.entries(releases).length > 0 ? artists[release.artist_id].username : "";
-  var releaseDetailTableLeft = release ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_release_detail_table_left__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  var releaseDetailTableLeft = Object.entries(artists).length > 0 && Object.entries(releases).length > 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_release_detail_table_left__WEBPACK_IMPORTED_MODULE_2__["default"], {
     releaseInfo: release,
     artistName: artistName,
     player: player
   }) : "";
-  var releaseDetailTableRight = release ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_release_detail_table_right__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  var releaseDetailTableRight = Object.entries(artists).length > 0 && Object.entries(releases).length > 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_release_detail_table_right__WEBPACK_IMPORTED_MODULE_3__["default"], {
     releaseInfo: release
   }) : "";
   var trackTable = Object.entries(tracks).length > 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tracks_track_table__WEBPACK_IMPORTED_MODULE_4__["default"], {
@@ -924,7 +924,9 @@ var ReleaseDetail = function ReleaseDetail(_ref) {
     className: "release-detail-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "release-detail-left"
-  }, releaseDetailTableLeft, trackTable, newTrackLink), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, releaseDetailTableLeft, trackTable, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "new-track-link"
+  }, newTrackLink)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "release-detail-left"
   }, releaseDetailTableRight));
 };
@@ -1002,9 +1004,9 @@ var ReleaseDetailTableLeft = function ReleaseDetailTableLeft(_ref) {
     className: "release-detail-artistlink"
   }, artistName);
   var purchaseLink = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    href: "#",
+    href: "",
     className: "release-detail-purchaseLink"
-  }, "$", releaseInfo.price, " USD");
+  }, "Purchase for $", releaseInfo.price, " USD");
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "release-detail-left-info"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
@@ -1015,7 +1017,7 @@ var ReleaseDetailTableLeft = function ReleaseDetailTableLeft(_ref) {
     className: "player-container"
   }, player), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     className: "release-detail-price"
-  }, "Purchase for ", purchaseLink));
+  }, purchaseLink));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (ReleaseDetailTableLeft);
@@ -1038,8 +1040,19 @@ __webpack_require__.r(__webpack_exports__);
 var ReleaseDetailTableRight = function ReleaseDetailTableRight(_ref) {
   var releaseInfo = _ref.releaseInfo;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    src: releaseInfo.photoUrl
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, releaseInfo.year), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, releaseInfo.release_type), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, releaseInfo.genre), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, releaseInfo.label));
+    src: releaseInfo.photoUrl,
+    className: "release-detail-right-image"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+    className: "release-detail-right-text"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    className: "release-detail-right-text-item"
+  }, releaseInfo.year), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "|"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    className: "release-detail-right-text-item"
+  }, releaseInfo.release_type), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "|"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    className: "release-detail-right-text-item"
+  }, releaseInfo.genre), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "|"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    className: "release-detail-right-text-item"
+  }, releaseInfo.label)));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (ReleaseDetailTableRight);
@@ -1667,13 +1680,17 @@ var TrackItem = function TrackItem(_ref) {
     return setPlayer( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_audio_player__WEBPACK_IMPORTED_MODULE_1___default.a, {
       src: track.songUrl,
       controls: true,
-      className: "audio-player"
+      className: "audio-player",
+      autoPlay: true
     }));
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "#", track.track_no, ": ", track.title, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    className: "track-table-item"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+    className: "play-button",
     onClick: addPlayer
-  }, "Play"));
+  }, String.fromCharCode(9654)), "   ", track.track_no, ".   ", track.title);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (TrackItem);
@@ -1708,7 +1725,9 @@ var TrackTable = function TrackTable(_ref) {
       key: idx
     });
   });
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, trackItems);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+    className: "track-table"
+  }, trackItems);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (TrackTable);

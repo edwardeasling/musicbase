@@ -8,13 +8,13 @@ const TrackItem = ({ track, setPlayer }) => {
             src={track.songUrl}
             controls
             className="audio-player"
+            autoPlay
         />
     )
 
     return (
-        <li>
-            #{track.track_no}: {track.title}
-            <button onClick={addPlayer}>Play</button>
+        <li className="track-table-item">
+            <strong className="play-button" onClick={addPlayer}>{String.fromCharCode(9654)}</strong>   {track.track_no}.   {track.title}
         </li>
     )
 

@@ -20,8 +20,8 @@ const ReleaseDetail = ({ releases, tracks, artists, fetchSingleRelease, fetchTra
     const newTrackLink = (release && (currentUserId == release.artist_id)) ? <Link to={'/new_track/' + releaseId}>Add Track</Link> : "";
     const artistName = (Object.entries(artists).length > 0 && Object.entries(releases).length > 0) ? artists[release.artist_id].username : "";
 
-    const releaseDetailTableLeft = release ? <ReleaseDetailTableLeft releaseInfo={release} artistName={artistName} player={player}/> : "";
-    const releaseDetailTableRight = release ? <ReleaseDetailTableRight releaseInfo={release} /> : "";
+    const releaseDetailTableLeft = (Object.entries(artists).length > 0 && Object.entries(releases).length > 0) ? <ReleaseDetailTableLeft releaseInfo={release} artistName={artistName} player={player}/> : "";
+    const releaseDetailTableRight = (Object.entries(artists).length > 0 && Object.entries(releases).length > 0) ? <ReleaseDetailTableRight releaseInfo={release} /> : "";
     const trackTable = Object.entries(tracks).length > 0 ? <TrackTable tracks={tracks} setPlayer={setPlayer}  /> : "";
 
     useEffect(() => {
@@ -34,7 +34,9 @@ const ReleaseDetail = ({ releases, tracks, artists, fetchSingleRelease, fetchTra
             <div className="release-detail-left">
                 {releaseDetailTableLeft}
                 {trackTable}
-                {newTrackLink}
+                <div className="new-track-link">
+                    {newTrackLink}
+                </div>
             </div>
             <div className="release-detail-left">
                 {releaseDetailTableRight}
