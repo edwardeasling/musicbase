@@ -31,9 +31,10 @@
 
 .header-right {
     display: flex;
+    justify-content: center;
     align-items: flex-end;
     width: 400px;
-    font-size: 14px;
+    font-size: 18px;
 }
 
 .header-right-greetingtext {

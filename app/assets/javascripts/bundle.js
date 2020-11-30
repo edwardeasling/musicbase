@@ -904,12 +904,7 @@ var ReleaseDetail = function ReleaseDetail(_ref) {
   }))),
       _useState2 = _slicedToArray(_useState, 2),
       player = _useState2[0],
-      setPlayer = _useState2[1]; // const newTrackLink = (release && (currentUserId == release.artist_id)) ? <div className="new-track-link"><Link to={'/new_track/' + releaseId}>Add Track</Link></div> : "";
-  // const artistName = (Object.entries(artists).length > 0 && Object.entries(releases).length > 0) ? Object.entries(artists)[0].username : "";
-  // const releaseDetailTableLeft = (Object.entries(artists).length > 0 && Object.entries(releases).length > 0) ? <ReleaseDetailTableLeft releaseInfo={release} artistName={artistName} player={player}/> : "";
-  // const releaseDetailTableRight = (Object.entries(artists).length > 0 && Object.entries(releases).length > 0) ? <ReleaseDetailTableRight releaseInfo={release} /> : "";
-  // const trackTable = Object.entries(tracks).length > 0 ? <TrackTable tracks={tracks} setPlayer={setPlayer}  /> : "";
-
+      setPlayer = _useState2[1];
 
   var newTrackLink = currentUserRelease ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "new-track-link"
