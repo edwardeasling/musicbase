@@ -927,7 +927,7 @@ var ReleaseDetail = function ReleaseDetail(_ref) {
   }, releaseDetailTableLeft, trackTable, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "new-track-link"
   }, newTrackLink)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "release-detail-left"
+    className: "release-detail-right"
   }, releaseDetailTableRight));
 };
 

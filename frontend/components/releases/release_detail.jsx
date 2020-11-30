@@ -38,7 +38,7 @@ const ReleaseDetail = ({ releases, tracks, artists, fetchSingleRelease, fetchTra
                     {newTrackLink}
                 </div>
             </div>
-            <div className="release-detail-left">
+            <div className="release-detail-right">
                 {releaseDetailTableRight}
             </div>
         </div>

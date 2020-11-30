@@ -26,13 +26,14 @@
 }
 
 .header-middle {
-    width: 15%;
+    min-width: 5%;
 }
 
 .header-right {
     display: flex;
     align-items: flex-end;
     width: 400px;
+    font-size: 20px;
 }
 
 .header-right-greetingtext {
