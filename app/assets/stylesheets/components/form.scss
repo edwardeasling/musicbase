@@ -7,14 +7,14 @@
     border: 1px solid gray;
     border-radius: 10px;
     
-    margin: 40px 0px;
+    margin: 30px 0px;
 
     align-items: center;
 }
 
 .form h2 {
     background-color: rgb(206, 206, 206);
-    font-size: 28px;
+    font-size: 20px;
     text-align: center;
     width: 100%;
     box-sizing: border-box;
@@ -29,13 +29,13 @@
     
     width: 80%;
 
-    padding: 20px; 
+    padding: 10px; 
 
-    font-size: 24px;
+    font-size: 18px;
 }
 
 .form-inputcontainer input {
-    padding: 5px;
+    padding: 4px;
 }
 
 .form-submitbutton {
@@ -43,14 +43,14 @@
     background-color: rgb(0,161,198);
     border: none;
     border-radius: 10px;
-    font-size: 28px;
+    font-size: 18px;
     color: white;
     padding: 10px;
-    margin: 15px 0;
+    margin: 7px 0;
 }
 
 .form-input {
-    font-size: 24px;
+    font-size: 16px;
 }
 
 .form-submitbutton:hover {
@@ -59,6 +59,6 @@
 
 .form-errors {
     color: maroon;
-    font-size: 20px;
+    font-size: 14px;
     margin-bottom: 5px;
 }

@@ -19,11 +19,12 @@ const SessionForm = ({ errors, formType, processForm }) => {
             user = { user: { username: username, password: password, email: email, description: description }};
         } else {
             user = new FormData();
-            user.append('user[username]', username)
-            user.append('user[password]', password)
-            user.append('user[email]', email)
-            user.append('user[description]', description)
-            user.append('user[photo]', photoFile)
+            // disabled these lines to temporarily break the signup form
+            // user.append('user[username]', username)
+            // user.append('user[password]', password)
+            // user.append('user[email]', email)
+            // user.append('user[description]', description)
+            // user.append('user[photo]', photoFile)
         }
         processForm(user).then(() => history.push('/'));
     }
@@ -37,7 +38,7 @@ const SessionForm = ({ errors, formType, processForm }) => {
     if (formType == 'login') {
         errorText = errors ? "Login failed (form may be missing data)" : "";
     } else {
-        errorText = errors ? "Signup failed (form may be missing data)" : "";
+        errorText = errors ? "New user signup is currently disabled" : "";
     }
 
     const headerText = formType === 'login' ? 'Login to your account' : 'Create a new account';
