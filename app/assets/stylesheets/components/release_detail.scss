@@ -32,17 +32,18 @@
 }
 
 .release-detail-artistname {
-    font-size: 30px;
+    font-size: 22px;
 }
 
 .release-detail-price {
-    font-size: 20px;
+    font-size: 16px;
     color: darkmagenta;
 }
                 
 .release-detail-title {
-    font-size: 44px;
+    font-size: 30px;
     font-weight: bold;
+    max-width: 350px;
 }
 
 // left-side track table
@@ -50,7 +51,7 @@
 .track-table {
     display: flex;
     flex-direction: column;
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 .track-table-item {
