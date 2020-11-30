@@ -900,9 +900,11 @@ var ReleaseDetail = function ReleaseDetail(_ref) {
       player = _useState2[0],
       setPlayer = _useState2[1];
 
-  var newTrackLink = release && currentUserId == release.artist_id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+  var newTrackLink = release && currentUserId == release.artist_id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "new-track-link"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     to: '/new_track/' + releaseId
-  }, "Add Track") : "";
+  }, "Add Track")) : "";
   var artistName = Object.entries(artists).length > 0 && Object.entries(releases).length > 0 ? artists[release.artist_id].username : "";
   var releaseDetailTableLeft = Object.entries(artists).length > 0 && Object.entries(releases).length > 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_release_detail_table_left__WEBPACK_IMPORTED_MODULE_2__["default"], {
     releaseInfo: release,
@@ -924,9 +926,7 @@ var ReleaseDetail = function ReleaseDetail(_ref) {
     className: "release-detail-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "release-detail-left"
-  }, releaseDetailTableLeft, trackTable, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "new-track-link"
-  }, newTrackLink)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, releaseDetailTableLeft, trackTable, newTrackLink), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "release-detail-right"
   }, releaseDetailTableRight));
 };

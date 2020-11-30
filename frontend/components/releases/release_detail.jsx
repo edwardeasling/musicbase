@@ -17,7 +17,7 @@ const ReleaseDetail = ({ releases, tracks, artists, fetchSingleRelease, fetchTra
         />
     </div>);
     
-    const newTrackLink = (release && (currentUserId == release.artist_id)) ? <Link to={'/new_track/' + releaseId}>Add Track</Link> : "";
+    const newTrackLink = (release && (currentUserId == release.artist_id)) ? <div className="new-track-link"><Link to={'/new_track/' + releaseId}>Add Track</Link></div> : "";
     const artistName = (Object.entries(artists).length > 0 && Object.entries(releases).length > 0) ? artists[release.artist_id].username : "";
 
     const releaseDetailTableLeft = (Object.entries(artists).length > 0 && Object.entries(releases).length > 0) ? <ReleaseDetailTableLeft releaseInfo={release} artistName={artistName} player={player}/> : "";
@@ -34,9 +34,9 @@ const ReleaseDetail = ({ releases, tracks, artists, fetchSingleRelease, fetchTra
             <div className="release-detail-left">
                 {releaseDetailTableLeft}
                 {trackTable}
-                <div className="new-track-link">
+                {/* <div className="new-track-link"> */}
                     {newTrackLink}
-                </div>
+                {/* </div> */}
             </div>
             <div className="release-detail-right">
                 {releaseDetailTableRight}
