@@ -888,6 +888,12 @@ var ReleaseDetail = function ReleaseDetail(_ref) {
       currentUserId = _ref.currentUserId;
   var releaseId = parseInt(Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useParams"])().releaseId);
   var release = releases[releaseId];
+  var releaseLoaded = release;
+  var artistLoaded = release && Object.entries(artists).length > 0 && Object.keys(artists)[0] == release.artist_id;
+  var tracksLoaded = Object.entries(tracks).length > 0 && Object.entries(tracks)[0][1].release_id == releaseId;
+  var currentUserRelease = releaseLoaded && currentUserId == release.artist_id;
+  console.log(releaseLoaded + ' ' + artistLoaded + ' ' + tracksLoaded + ' ' + currentUserRelease);
+  console.log(Object.entries(artists));
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "audio-player"
@@ -898,23 +904,28 @@ var ReleaseDetail = function ReleaseDetail(_ref) {
   }))),
       _useState2 = _slicedToArray(_useState, 2),
       player = _useState2[0],
-      setPlayer = _useState2[1];
+      setPlayer = _useState2[1]; // const newTrackLink = (release && (currentUserId == release.artist_id)) ? <div className="new-track-link"><Link to={'/new_track/' + releaseId}>Add Track</Link></div> : "";
+  // const artistName = (Object.entries(artists).length > 0 && Object.entries(releases).length > 0) ? Object.entries(artists)[0].username : "";
+  // const releaseDetailTableLeft = (Object.entries(artists).length > 0 && Object.entries(releases).length > 0) ? <ReleaseDetailTableLeft releaseInfo={release} artistName={artistName} player={player}/> : "";
+  // const releaseDetailTableRight = (Object.entries(artists).length > 0 && Object.entries(releases).length > 0) ? <ReleaseDetailTableRight releaseInfo={release} /> : "";
+  // const trackTable = Object.entries(tracks).length > 0 ? <TrackTable tracks={tracks} setPlayer={setPlayer}  /> : "";
 
-  var newTrackLink = release && currentUserId == release.artist_id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+
+  var newTrackLink = currentUserRelease ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "new-track-link"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     to: '/new_track/' + releaseId
   }, "Add Track")) : "";
-  var artistName = Object.entries(artists).length > 0 && Object.entries(releases).length > 0 ? Objects.entries(artists)[0].username : "";
-  var releaseDetailTableLeft = Object.entries(artists).length > 0 && Object.entries(releases).length > 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_release_detail_table_left__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  var artistName = artistLoaded ? Object.entries(artists)[0][1].username : "";
+  var releaseDetailTableLeft = artistLoaded ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_release_detail_table_left__WEBPACK_IMPORTED_MODULE_2__["default"], {
     releaseInfo: release,
     artistName: artistName,
     player: player
   }) : "";
-  var releaseDetailTableRight = Object.entries(artists).length > 0 && Object.entries(releases).length > 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_release_detail_table_right__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  var releaseDetailTableRight = artistLoaded ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_release_detail_table_right__WEBPACK_IMPORTED_MODULE_3__["default"], {
     releaseInfo: release
   }) : "";
-  var trackTable = Object.entries(tracks).length > 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tracks_track_table__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  var trackTable = tracksLoaded ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tracks_track_table__WEBPACK_IMPORTED_MODULE_4__["default"], {
     tracks: tracks,
     setPlayer: setPlayer
   }) : "";

@@ -9,6 +9,16 @@ const ReleaseDetail = ({ releases, tracks, artists, fetchSingleRelease, fetchTra
 
     const releaseId = parseInt(useParams().releaseId);
     const release = releases[releaseId];
+
+    const releaseLoaded = release;
+    const artistLoaded = release && (Object.entries(artists).length > 0) && (Object.keys(artists)[0] == release.artist_id);
+    const tracksLoaded = Object.entries(tracks).length > 0 && Object.entries(tracks)[0][1].release_id == releaseId;
+    const currentUserRelease = releaseLoaded && (currentUserId == release.artist_id);
+
+    console.log(releaseLoaded + ' ' + artistLoaded + ' ' + tracksLoaded + ' ' + currentUserRelease);
+    console.log(Object.entries(artists))
+
+
     const [player, setPlayer] = useState(<div className="audio-player">
         <ReactAudioPlayer
             src=""
@@ -17,12 +27,19 @@ const ReleaseDetail = ({ releases, tracks, artists, fetchSingleRelease, fetchTra
         />
     </div>);
     
-    const newTrackLink = (release && (currentUserId == release.artist_id)) ? <div className="new-track-link"><Link to={'/new_track/' + releaseId}>Add Track</Link></div> : "";
-    const artistName = (Object.entries(artists).length > 0 && Object.entries(releases).length > 0) ? Objects.entries(artists)[0].username : "";
+    // const newTrackLink = (release && (currentUserId == release.artist_id)) ? <div className="new-track-link"><Link to={'/new_track/' + releaseId}>Add Track</Link></div> : "";
+    // const artistName = (Object.entries(artists).length > 0 && Object.entries(releases).length > 0) ? Object.entries(artists)[0].username : "";
 
-    const releaseDetailTableLeft = (Object.entries(artists).length > 0 && Object.entries(releases).length > 0) ? <ReleaseDetailTableLeft releaseInfo={release} artistName={artistName} player={player}/> : "";
-    const releaseDetailTableRight = (Object.entries(artists).length > 0 && Object.entries(releases).length > 0) ? <ReleaseDetailTableRight releaseInfo={release} /> : "";
-    const trackTable = Object.entries(tracks).length > 0 ? <TrackTable tracks={tracks} setPlayer={setPlayer}  /> : "";
+    // const releaseDetailTableLeft = (Object.entries(artists).length > 0 && Object.entries(releases).length > 0) ? <ReleaseDetailTableLeft releaseInfo={release} artistName={artistName} player={player}/> : "";
+    // const releaseDetailTableRight = (Object.entries(artists).length > 0 && Object.entries(releases).length > 0) ? <ReleaseDetailTableRight releaseInfo={release} /> : "";
+    // const trackTable = Object.entries(tracks).length > 0 ? <TrackTable tracks={tracks} setPlayer={setPlayer}  /> : "";
+    
+    const newTrackLink = currentUserRelease ? <div className="new-track-link"><Link to={'/new_track/' + releaseId}>Add Track</Link></div> : "";
+    const artistName = artistLoaded ? Object.entries(artists)[0][1].username : "";
+
+    const releaseDetailTableLeft = artistLoaded ? <ReleaseDetailTableLeft releaseInfo={release} artistName={artistName} player={player}/> : "";
+    const releaseDetailTableRight = artistLoaded ? <ReleaseDetailTableRight releaseInfo={release} /> : "";
+    const trackTable = tracksLoaded ?  <TrackTable tracks={tracks} setPlayer={setPlayer}  /> : "";
 
     useEffect(() => {
         fetchSingleRelease(releaseId);
