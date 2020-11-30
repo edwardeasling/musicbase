@@ -905,7 +905,7 @@ var ReleaseDetail = function ReleaseDetail(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     to: '/new_track/' + releaseId
   }, "Add Track")) : "";
-  var artistName = Object.entries(artists).length > 0 && Object.entries(releases).length > 0 ? artists[release.artist_id].username : "";
+  var artistName = Object.entries(artists).length > 0 && Object.entries(releases).length > 0 ? Objects.entries(artists)[0].username : "";
   var releaseDetailTableLeft = Object.entries(artists).length > 0 && Object.entries(releases).length > 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_release_detail_table_left__WEBPACK_IMPORTED_MODULE_2__["default"], {
     releaseInfo: release,
     artistName: artistName,
