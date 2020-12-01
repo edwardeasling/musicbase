@@ -38,7 +38,11 @@ const App = () => {
             </main>
 
             <footer className="footer">
-                <h4></h4>
+                <ul className="footer-list">
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li className="footer-list-final"><a href="#">Legal</a></li>
+                </ul>
             </footer>
         </div>
     )

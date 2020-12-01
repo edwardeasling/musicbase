@@ -1,5 +1,20 @@
 .footer {
     background-color: #477987;
+}
 
+.footer-list {
+    display: flex;
     min-height: 100px;
+    color: white;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.footer-list li {
+    padding: 5px 10px;
+}
+
+.footer-list-final {
+    margin-right: 20px;;
 }

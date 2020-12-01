@@ -427,7 +427,17 @@ var App = function App() {
     component: _tracks_track_form_container__WEBPACK_IMPORTED_MODULE_6__["default"]
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("footer", {
     className: "footer"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null)));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+    className: "footer-list"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    href: "#"
+  }, "About")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    href: "#"
+  }, "Contact Us")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    className: "footer-list-final"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    href: "#"
+  }, "Legal")))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
@@ -921,8 +931,6 @@ var ReleaseDetail = function ReleaseDetail(_ref) {
   var artistLoaded = release && Object.entries(artists).length > 0 && Object.keys(artists)[0] == release.artist_id;
   var tracksLoaded = Object.entries(tracks).length > 0 && Object.entries(tracks)[0][1].release_id == releaseId;
   var currentUserRelease = releaseLoaded && currentUserId == release.artist_id;
-  console.log(releaseLoaded + ' ' + artistLoaded + ' ' + tracksLoaded + ' ' + currentUserRelease);
-  console.log(Object.entries(artists));
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "audio-player"
@@ -1039,7 +1047,7 @@ var ReleaseDetailTableLeft = function ReleaseDetailTableLeft(_ref) {
     className: "release-detail-artistlink"
   }, artistName);
   var purchaseLink = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    href: "",
+    href: "#",
     className: "release-detail-purchaseLink"
   }, "Purchase for $", releaseInfo.price, " USD");
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

@@ -15,10 +15,6 @@ const ReleaseDetail = ({ releases, tracks, artists, fetchSingleRelease, fetchTra
     const tracksLoaded = Object.entries(tracks).length > 0 && Object.entries(tracks)[0][1].release_id == releaseId;
     const currentUserRelease = releaseLoaded && (currentUserId == release.artist_id);
 
-    console.log(releaseLoaded + ' ' + artistLoaded + ' ' + tracksLoaded + ' ' + currentUserRelease);
-    console.log(Object.entries(artists))
-
-
     const [player, setPlayer] = useState(<div className="audio-player">
         <ReactAudioPlayer
             src=""
