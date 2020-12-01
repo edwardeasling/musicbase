@@ -1,4 +1,6 @@
 import React from "react";
+import { Route, Switch, Link } from 'react-router-dom';
+import { AuthRoute, ProtectedRoute } from '../util/route_util';
 import GreetingContainer from './greeting/greeting_container';
 import LoginFormContainer from './auth/login_form_container';
 import SignupFormContainer from './auth/signup_form_container';
@@ -8,8 +10,6 @@ import TrackFormContainer from './tracks/track_form_container';
 import ReleaseDetailContainer from './releases/release_detail_container';
 import ArtistDetailContainer from './artist/artist_detail_container';
 import SearchContainer from './search/search_container';
-import { Route, Switch, Link } from 'react-router-dom';
-import { AuthRoute, ProtectedRoute } from '../util/route_util';
 
 const App = () => {
 

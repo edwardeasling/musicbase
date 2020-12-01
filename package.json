@@ -29,7 +29,7 @@
   },
   "scripts": {
     "start": "webpack --watch --config webpack.dev.js",
-    "prod": "webpack --config webpack.prod.js"
+    "build": "webpack -p --mode production --config webpack.prod.js"
   },
   "repository": {
     "type": "git",
