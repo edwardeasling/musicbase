@@ -1,4 +1,4 @@
-import { getRandomReleases, getUserReleases, createRelease, getSingleRelease } from '../util/release_api_util';
+import { getRandomReleases, getUserReleases, createRelease, getSingleRelease, searchReleases } from '../util/release_api_util';
 import { fetchArtist} from './artist_actions';
 
 export const RECEIVE_RELEASES = "RECEIVE_RELEASES";
@@ -21,6 +21,9 @@ const receiveReleaseErrors = errors => ({
 });
 
 export const fetchRandomReleases = numberOfReleases => dispatch => getRandomReleases(numberOfReleases)
+    .then(releases => dispatch(receiveReleases(releases)))
+
+export const fetchSearch = searchText => dispatch => searchReleases(searchText)
     .then(releases => dispatch(receiveReleases(releases)))
 
 export const fetchUserInfo = userId => dispatch => getUserReleases(userId)

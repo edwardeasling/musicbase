@@ -12,7 +12,7 @@ const ArtistDetail = ({ releases, type, artists, fetchReleases }) => {
 
     return(
         <div className="artist-detail">
-            <ReleasesIndex releases={releases} type={type} fetchReleases={fetchReleases} artistId={artistId}/>
+            <ReleasesIndex releases={releases} type={type} fetchReleases={fetchReleases} filter={artistId}/>
             <div className="artist-right">
                 <img src={photoUrl} />
                 <p className="artist-right-username">{username}</p>

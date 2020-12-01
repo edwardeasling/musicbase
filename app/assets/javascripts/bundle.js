@@ -122,7 +122,7 @@ var fetchArtist = function fetchArtist(artistId) {
 /*!*********************************************!*\
   !*** ./frontend/actions/release_actions.js ***!
   \*********************************************/
-/*! exports provided: RECEIVE_RELEASES, RECEIVE_RELEASE, RECEIVE_RELEASE_ERRORS, fetchRandomReleases, fetchUserInfo, fetchSingleRelease, createNewRelease */
+/*! exports provided: RECEIVE_RELEASES, RECEIVE_RELEASE, RECEIVE_RELEASE_ERRORS, fetchRandomReleases, fetchSearch, fetchUserInfo, fetchSingleRelease, createNewRelease */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -131,6 +131,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_RELEASE", function() { return RECEIVE_RELEASE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_RELEASE_ERRORS", function() { return RECEIVE_RELEASE_ERRORS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchRandomReleases", function() { return fetchRandomReleases; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSearch", function() { return fetchSearch; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUserInfo", function() { return fetchUserInfo; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSingleRelease", function() { return fetchSingleRelease; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNewRelease", function() { return createNewRelease; });
@@ -166,6 +167,13 @@ var receiveReleaseErrors = function receiveReleaseErrors(errors) {
 var fetchRandomReleases = function fetchRandomReleases(numberOfReleases) {
   return function (dispatch) {
     return Object(_util_release_api_util__WEBPACK_IMPORTED_MODULE_0__["getRandomReleases"])(numberOfReleases).then(function (releases) {
+      return dispatch(receiveReleases(releases));
+    });
+  };
+};
+var fetchSearch = function fetchSearch(searchText) {
+  return function (dispatch) {
+    return Object(_util_release_api_util__WEBPACK_IMPORTED_MODULE_0__["searchReleases"])(searchText).then(function (releases) {
       return dispatch(receiveReleases(releases));
     });
   };
@@ -354,8 +362,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _tracks_track_form_container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./tracks/track_form_container */ "./frontend/components/tracks/track_form_container.js");
 /* harmony import */ var _releases_release_detail_container__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./releases/release_detail_container */ "./frontend/components/releases/release_detail_container.js");
 /* harmony import */ var _artist_artist_detail_container__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./artist/artist_detail_container */ "./frontend/components/artist/artist_detail_container.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.jsx");
+/* harmony import */ var _search_search_container__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./search/search_container */ "./frontend/components/search/search_container.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.jsx");
+
 
 
 
@@ -375,7 +385,7 @@ var App = function App() {
     className: "header"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
     className: "header-left"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__["Link"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__["Link"], {
     to: "/"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
     src: window.logo,
@@ -386,29 +396,32 @@ var App = function App() {
     className: "header-middle"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_greeting_greeting_container__WEBPACK_IMPORTED_MODULE_1__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", {
     className: "main"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_10__["AuthRoute"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_11__["AuthRoute"], {
     exact: true,
     path: "/login",
     component: _auth_login_form_container__WEBPACK_IMPORTED_MODULE_2__["default"]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_10__["AuthRoute"], {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_11__["AuthRoute"], {
     exact: true,
     path: "/signup",
     component: _auth_signup_form_container__WEBPACK_IMPORTED_MODULE_3__["default"]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__["Route"], {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__["Route"], {
     path: "/artist/:artistId/",
     component: _artist_artist_detail_container__WEBPACK_IMPORTED_MODULE_8__["default"]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__["Route"], {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__["Route"], {
     path: "/releases/:releaseId/",
     component: _releases_release_detail_container__WEBPACK_IMPORTED_MODULE_7__["default"]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__["Route"], {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__["Route"], {
+    path: "/search/:searchText/",
+    component: _search_search_container__WEBPACK_IMPORTED_MODULE_9__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__["Route"], {
     exact: true,
     path: "/",
     component: _releases_releases_index_container__WEBPACK_IMPORTED_MODULE_4__["default"]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_10__["ProtectedRoute"], {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_11__["ProtectedRoute"], {
     exact: true,
     path: "/new_release",
     component: _releases_release_form_container__WEBPACK_IMPORTED_MODULE_5__["default"]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_10__["ProtectedRoute"], {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_11__["ProtectedRoute"], {
     exact: true,
     path: "/new_track/:releaseId",
     component: _tracks_track_form_container__WEBPACK_IMPORTED_MODULE_6__["default"]
@@ -454,7 +467,7 @@ var ArtistDetail = function ArtistDetail(_ref) {
     releases: releases,
     type: type,
     fetchReleases: fetchReleases,
-    artistId: artistId
+    filter: artistId
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "artist-right"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -759,9 +772,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var Greeting = function Greeting(_ref) {
   var currentUser = _ref.currentUser,
       logout = _ref.logout;
+  var history = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useHistory"])();
+  var searchBar = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    placeholder: "Search...",
+    onKeyPress: function onKeyPress(event) {
+      if (event.key === 'Enter') {
+        history.push("/search/".concat(event.target.value));
+      }
+    },
+    className: "search-bar"
+  });
   var userPagePath;
 
   if (currentUser) {
@@ -771,6 +796,8 @@ var Greeting = function Greeting(_ref) {
   var loggedInGreeting = function loggedInGreeting() {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
       className: "header-right"
+    }, searchBar, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "header-right-links"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
       className: "header-right-greetingtext"
     }, "Logged in as ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
@@ -782,19 +809,21 @@ var Greeting = function Greeting(_ref) {
     }, "Create new release"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
       className: "header-right-greetingtext header-button",
       onClick: logout
-    }, "Logout"));
+    }, "Logout")));
   };
 
   var notLoggedInGreeting = function notLoggedInGreeting() {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
       className: "header-right"
+    }, searchBar, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "header-right-links"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
       to: "/signup",
       className: "header-right-greetingtext header-button"
     }, "Signup"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
       to: "/login",
       className: "header-right-greetingtext header-button"
-    }, "Login"));
+    }, "Login")));
   };
 
   return currentUser ? loggedInGreeting() : notLoggedInGreeting();
@@ -1296,14 +1325,11 @@ __webpack_require__.r(__webpack_exports__);
 var ReleaseItem = function ReleaseItem(_ref) {
   var release = _ref.release,
       type = _ref.type;
-  var artistLine = type == "random" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+  var artistLine = type != "artist" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     to: "/artist/".concat(release.artist_id)
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     className: "release-artist"
   }, release.username)) : "";
-  var genreLine = type == "random" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "release-genre"
-  }, release.genre) : "";
   var releaseLink = "/releases/".concat(release.id);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "release-item"
@@ -1316,7 +1342,9 @@ var ReleaseItem = function ReleaseItem(_ref) {
     to: releaseLink
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     className: "release-title"
-  }, release.title)), genreLine);
+  }, release.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "release-genre"
+  }, release.genre));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (ReleaseItem);
@@ -1342,13 +1370,13 @@ var ReleasesIndex = function ReleasesIndex(_ref) {
   var releases = _ref.releases,
       type = _ref.type,
       fetchReleases = _ref.fetchReleases,
-      artistId = _ref.artistId;
+      filter = _ref.filter;
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     // fetches releases from database
     if (type == "random") {
       fetchReleases(8);
     } else {
-      fetchReleases(artistId);
+      fetchReleases(filter);
     }
   }, []);
 
@@ -1467,6 +1495,81 @@ var Root = function Root(_ref) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Root);
+
+/***/ }),
+
+/***/ "./frontend/components/search/search.jsx":
+/*!***********************************************!*\
+  !*** ./frontend/components/search/search.jsx ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _releases_releases_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../releases/releases_index */ "./frontend/components/releases/releases_index.jsx");
+
+
+
+
+var Search = function Search(_ref) {
+  var releases = _ref.releases,
+      type = _ref.type,
+      fetchReleases = _ref.fetchReleases;
+  var searchText = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useParams"])().searchText;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+    className: "search-header"
+  }, "Search results for \"", searchText, "\""), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_releases_releases_index__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    releases: releases,
+    type: type,
+    fetchReleases: fetchReleases,
+    filter: searchText
+  }));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Search);
+
+/***/ }),
+
+/***/ "./frontend/components/search/search_container.js":
+/*!********************************************************!*\
+  !*** ./frontend/components/search/search_container.js ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _search_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./search.jsx */ "./frontend/components/search/search.jsx");
+/* harmony import */ var _actions_release_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../../actions/release_actions */ "./frontend/actions/release_actions.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+
+
+
+
+var mapStateToProps = function mapStateToProps(_ref) {
+  var entities = _ref.entities;
+  return {
+    releases: entities.releases,
+    type: 'search'
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    fetchReleases: function fetchReleases(searchText) {
+      return dispatch(Object(_actions_release_actions__WEBPACK_IMPORTED_MODULE_2__["fetchSearch"])(searchText));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["connect"])(mapStateToProps, mapDispatchToProps)(_search_jsx__WEBPACK_IMPORTED_MODULE_1__["default"]));
 
 /***/ }),
 

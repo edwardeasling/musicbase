@@ -7,6 +7,7 @@ import ReleaseFormContainer from './releases/release_form_container';
 import TrackFormContainer from './tracks/track_form_container';
 import ReleaseDetailContainer from './releases/release_detail_container';
 import ArtistDetailContainer from './artist/artist_detail_container';
+import SearchContainer from './search/search_container';
 import { Route, Switch, Link } from 'react-router-dom';
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
 
@@ -29,6 +30,7 @@ const App = () => {
                     <AuthRoute exact path="/signup" component={ SignupFormContainer } />
                     <Route path="/artist/:artistId/" component={ArtistDetailContainer} />
                     <Route path="/releases/:releaseId/" component={ReleaseDetailContainer} />
+                    <Route path="/search/:searchText/" component={SearchContainer} />
                     <Route exact path="/" component={ ReleasesIndexContainer } />
                     <ProtectedRoute exact path="/new_release" component={ ReleaseFormContainer } />
                     <ProtectedRoute exact path="/new_track/:releaseId" component={ TrackFormContainer } />

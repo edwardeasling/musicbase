@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import ReleaseItem from './release_item.jsx';
 
-const ReleasesIndex = ({ releases, type, fetchReleases, artistId }) => {
+const ReleasesIndex = ({ releases, type, fetchReleases, filter }) => {
 
     useEffect(() => {
         // fetches releases from database
         if (type=="random") { 
             fetchReleases(8)
         } else {
-            fetchReleases(artistId);
+            fetchReleases(filter);
         }
     }, []);
 
