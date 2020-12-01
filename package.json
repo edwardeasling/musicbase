@@ -29,8 +29,8 @@
     "test": "test"
   },
   "scripts": {
-    "start": "webpack --watch --mode=development",
-    "post-install": "webpack"
+    "start": "webpack --watch --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
   },
   "repository": {
     "type": "git",

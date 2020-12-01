@@ -2213,7 +2213,7 @@ var getArtist = function getArtist(userId) {
 /*!*******************************************!*\
   !*** ./frontend/util/release_api_util.js ***!
   \*******************************************/
-/*! exports provided: createRelease, getRandomReleases, getUserReleases, getSingleRelease */
+/*! exports provided: createRelease, getRandomReleases, getUserReleases, getSingleRelease, searchReleases */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2222,6 +2222,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getRandomReleases", function() { return getRandomReleases; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUserReleases", function() { return getUserReleases; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getSingleRelease", function() { return getSingleRelease; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "searchReleases", function() { return searchReleases; });
 var createRelease = function createRelease(release, artistId) {
   return $.ajax({
     method: 'POST',
@@ -2263,7 +2264,19 @@ var getSingleRelease = function getSingleRelease(releaseId) {
     },
     url: "/api/releases/".concat(releaseId)
   });
-}; // rel = { release: { title: 'Old Timez', year: 1982, label: 'Hillbilly Folk Records', price: 1000, artist_id: 1, release_type: 'album' }}
+};
+var searchReleases = function searchReleases(searchText) {
+  return $.ajax({
+    method: 'GET',
+    headers: {
+      'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content
+    },
+    url: "/api/releases",
+    data: {
+      searchText: searchText
+    }
+  });
+};
 
 /***/ }),
 

@@ -12,7 +12,9 @@ class Api::ReleasesController < ApplicationController
     def index
         if params[:user_id] 
             @releases = Release.where(artist_id: params[:user_id]).includes(:artist)
-        else
+        elsif params[:searchText]
+            @releases = Release.joins(:artist).where("title ILIKE ? OR genre ILIKE ? OR username ILIKE ?", "%#{params[:searchText]}%", "%#{params[:searchText]}%", "%#{params[:searchText]}%") 
+        elsif
             @releases = Release.order_by_rand.limit(params[:numberOfReleases]).all.includes(:artist)
         end
         render :index
@@ -21,9 +23,6 @@ class Api::ReleasesController < ApplicationController
     def show
         @release = Release.find(params[:id])
     end
-
-    # def destroy
-    # end
 
     private
     def release_params
