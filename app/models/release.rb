@@ -17,4 +17,8 @@ class Release < ApplicationRecord
     has_one_attached :photo, 
         :dependent => :destroy
 
+    # search(searchText) {
+    #     const releasesMatched = Release.where("title")
+    # }
+
 end
