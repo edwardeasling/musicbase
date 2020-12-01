@@ -1520,7 +1520,9 @@ var Search = function Search(_ref) {
       type = _ref.type,
       fetchReleases = _ref.fetchReleases;
   var searchText = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useParams"])().searchText;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "search"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
     className: "search-header"
   }, "Search results for \"", searchText, "\""), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_releases_releases_index__WEBPACK_IMPORTED_MODULE_2__["default"], {
     releases: releases,
