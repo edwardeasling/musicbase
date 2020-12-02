@@ -28,7 +28,7 @@
     "test": "test"
   },
   "scripts": {
-    "start": "webpack --config webpack.prod.js",
+    "start": "webpack --config webpack.dev.js"
   },
   "heroku-run-build-script": true,
   "repository": {
