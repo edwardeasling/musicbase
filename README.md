@@ -5,12 +5,12 @@ MusicBase is a Bandcamp clone, designed to allow musicians to easily share their
 
 The app is live and accessible at https://musicbaseapp.herokuapp.com/
 
+<<<<<<< HEAD
 ####### Example: UI for navigating releases
 ![](/images/musicbase-1.png)
 
 ####### Example: UI for viewing an individual release
 ![](/images/musicbase-2.png)
-
 
 ### Technologies Used
 The backend is built on Rails. It manages a PostgreSQL database of objects (artists, releases, tracks), which are served as JSON objects to the frontend upon request. Image and audio files are stored externally on AWS and managed with ActiveStorage
